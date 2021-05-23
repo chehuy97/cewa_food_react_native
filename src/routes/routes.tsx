@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
 import Home from '../screens/home/home';
 import Account from '../screens/account/account';
-import { HomeOutlined, HomeSharp, AccountCircleOutlined, AccountCircleSharp  } from '@material-ui/icons'
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Notificaton from '../screens/notification/notification'
+import Icon from 'react-native-vector-icons/Ionicons';
+//import { HomeOutlined, HomeSharp, AccountCircleOutlined, AccountCircleSharp } from '@material-ui/icons'
+import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,38 +14,34 @@ const Tab = createBottomTabNavigator();
 const routes = () => {
 
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          // var iconName:string="";
-
-          if (route.name === 'Home') {
-            if(focused){
-              return <HomeOutlined/>
-            } else {
-              return <HomeSharp/>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            var stringName:string = "home"
+            if(route.name == "Home"){
+              stringName = "home-sharp"
+            } else if(route.name == "Account") {
+              stringName = "person-sharp"
+            } else if (route.name == "Notification"){
+              stringName = "notifications-sharp"
             }
-          } else if (route.name === 'Account') {
-            if(focused){
-              return <AccountCircleOutlined/>
-            } else {
-              return <AccountCircleSharp/>
-            }
-          }
-          // console.log("Focus is "+focused+" and "+iconName+" color "+color+" size "+size);
+            return <Icon name={stringName} size={28} color={color} />;
+          },
           
-          // // You can return any component that you like here!
-          // return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}
-    >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Account" component={Account} />
-    </Tab.Navigator>
+        })}
+        tabBarOptions={{
+          activeTintColor: 'red',
+          inactiveTintColor: 'gray',
+          showLabel: false,
+          style:{ height: 55, backgroundColor: '#D3D3D3'}
+        }}
+      >
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Notification" component={Notificaton} />
+        <Tab.Screen name="Account" component={Account} />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 
