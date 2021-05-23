@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 
-const Account = () => {
+const Store = () => {
     return (
         <View>
-            <Text> Account</Text>
+            <Text> Store</Text>
         </View>
     )
 }
 
-export default Account
+export default Store

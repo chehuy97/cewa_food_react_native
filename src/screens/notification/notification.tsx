@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 
-const notification = () => {
+const Notification = () => {
     return (
         <View>
             <Text> Notification</Text>
@@ -9,4 +9,4 @@ const notification = () => {
     )
 }
 
-export default notification
+export default Notification

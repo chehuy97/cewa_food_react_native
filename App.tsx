@@ -7,7 +7,7 @@
  */
 import React from 'react';
 import { Text } from 'react-native';
-import Routes from './src/routes/routes';
+import Routes from './src/routes/Routes';
 
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
   console.disableYellowBox = true;
 
   return (
-      <Routes />
+      <Routes/>
   )
 }
 
