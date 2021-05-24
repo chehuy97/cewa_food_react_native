@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import dimens from '../../constants/Dimens'
+import dimens from '../../constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Food } from '../../DummyData'
+import { Store } from '../../DummyData'
 
 export interface StoreProps {
-  data: Food,
+  data: Store,
   callBack: () => any
 }
 
@@ -20,8 +20,8 @@ const StoreItem = ({ data, callBack }: StoreProps) => {
   }
 
   return (
-    <TouchableOpacity 
-    onPress={() => callBack()}>
+    <TouchableOpacity
+      onPress={() => callBack()}>
       <View style={styles.container}>
         <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imageFood} />
         <View style={styles.containerInfo}>

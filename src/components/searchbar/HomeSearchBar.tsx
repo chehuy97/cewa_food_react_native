@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import dimens from '../../constants/Dimens'
+import dimens from '../../constants/dimens'
 
 const HomeSearchBar = () => {
   const [searchValue, setSearchValue] = React.useState('')

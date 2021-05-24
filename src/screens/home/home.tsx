@@ -6,13 +6,16 @@ import { Header } from 'react-native-elements'
 import SearchBar from '../../components/searchbar/HomeSearchBar'
 import StoreItem from '../../components/items/StoreItem'
 import { stores } from '../../DummyData'
+import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {
 
     const navigation = useNavigation()
 
     const navigate_to_store_detail = () =>{
-        navigation.navigate("Store") 
+        navigate("Store",{
+            store_id:"Arthur"
+        })
     }
 
     return (
