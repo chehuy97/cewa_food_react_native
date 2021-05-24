@@ -3,12 +3,12 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
-import colors from '../constants/colors'
+import colors from '../constants/Colors'
 import { createStackNavigator } from '@react-navigation/stack';
-import Account from '../screens/account/Account';
-import Home from '../screens/home/Home';
+import Account from '../screens/account/account';
+import Home from '../screens/home/home';
 import Store from '../screens/store/Store';
-import Notificaton from '../screens/notification/Notification'
+import Notificaton from '../screens/notification/notification'
 import SearchBar from '../components/searchbar/HomeSearchBar';
 
 const Tab = createBottomTabNavigator();

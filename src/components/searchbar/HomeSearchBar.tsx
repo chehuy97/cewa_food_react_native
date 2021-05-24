@@ -1,16 +1,27 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import dimens from '../../constants/Dimens'
 
 const HomeSearchBar = () => {
   const [searchValue, setSearchValue] = React.useState('')
+  
+  const set_platform = () => {
+    switch(Platform.OS){
+      case "ios":
+        return "ios"
+      case "android":
+        return "android" 
+      default:
+        return "default"
+    }
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="red" />
       <SearchBar
-        platform="android"
+        platform="ios"
         placeholder="Tìm kiếm món ăn, địa chỉ, ..."
         onChangeText={text => { setSearchValue(text) }}
         value={searchValue}
