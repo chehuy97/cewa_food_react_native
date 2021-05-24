@@ -11,13 +11,17 @@ const Home = () => {
 
     const navigation = useNavigation()
 
+    const navigate_to_store_detail = () =>{
+        navigation.navigate("Store") 
+    }
+
     return (
         <View>
             <SearchBar/>
             <View>
             <FlatList
                 data={stores}
-                renderItem={({ item }) => <StoreItem data={item}/>}
+                renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail}/>}
                 numColumns={2}
                 keyExtractor={item => item.store_id } />
             </View>

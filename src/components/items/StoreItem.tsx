@@ -1,39 +1,42 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import dimens from '../../constants/Dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
-import {Food} from '../../DummyData'
+import { Food } from '../../DummyData'
 
 export interface StoreProps {
-  data:Food
+  data: Food,
+  callBack: () => any
 }
 
-const StoreItem = ({data}:StoreProps) => {
+const StoreItem = ({ data, callBack }: StoreProps) => {
 
-  const is_oustanding_store = (rating:Number) => {
-    if(rating >= 4.5){
+  const is_oustanding_store = (rating: Number) => {
+    if (rating >= 4.5) {
       return true
-    }else{
+    } else {
       return false
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imageFood} />
-      <View style={styles.containerInfo}>
-        <View style={{flexDirection:'row',alignItems:'center'}}>
-          {is_oustanding_store(data.rating) ? <Icon name='star-sharp' size={20} color="#ECCE00" style={{marginRight:5}}/>:null}
-          <Text style={styles.textTitle} numberOfLines={1}>{data.name}</Text>
-        </View>
-        <Text style={styles.textAddress} numberOfLines={1}>{data.address}</Text>
-        <View style={styles.containerTag}>
-          <Icon name="pricetag-sharp" size={19} color="red" />
-          <Text style={styles.tagName}>{data.type}</Text>
+    <TouchableOpacity 
+    onPress={() => callBack()}>
+      <View style={styles.container}>
+        <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imageFood} />
+        <View style={styles.containerInfo}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {is_oustanding_store(data.rating) ? <Icon name='star-sharp' size={20} color="#ECCE00" style={{ marginRight: 5 }} /> : null}
+            <Text style={styles.textTitle} numberOfLines={1}>{data.name}</Text>
+          </View>
+          <Text style={styles.textAddress} numberOfLines={1}>{data.address}</Text>
+          <View style={styles.containerTag}>
+            <Icon name="pricetag-sharp" size={19} color="red" />
+            <Text style={styles.tagName}>{data.type}</Text>
+          </View>
         </View>
       </View>
-
-    </View>
+    </TouchableOpacity>
   );
 };
 
