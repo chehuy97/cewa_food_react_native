@@ -10,23 +10,21 @@ import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {
 
-    const navigation = useNavigation()
-
-    const navigate_to_store_detail = () =>{
-        navigate("Store",{
-            store_id:"Arthur"
+    const navigate_to_store_detail = () => {
+        navigate("Store", {
+            store_id: "Arthur"
         })
     }
 
     return (
         <View>
             <SearchBar/>
-            <View>
-            <FlatList
-                data={stores}
-                renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail}/>}
-                numColumns={2}
-                keyExtractor={item => item.store_id } />
+            <View style={{marginBottom:110}}>
+                <FlatList
+                    data={stores}
+                    renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail} />}
+                    numColumns={2}
+                    keyExtractor={item => item.store_id} />
             </View>
         </View>
     )
@@ -35,7 +33,7 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1
+    container: {
+        flex: 1
     }
 })

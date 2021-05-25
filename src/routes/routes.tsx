@@ -6,11 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import colors from '../constants/colors'
 import { createStackNavigator } from '@react-navigation/stack';
 import Account from '../screens/account/account';
-import Home from '../screens/home/home';
+import Home from '../screens/home/Home';
 import Store from '../screens/store/Store';
 import Notificaton from '../screens/notification/notification'
 import SearchBar from '../components/searchbar/HomeSearchBar';
 import {navigationRef} from'./rootNavigation';
+import Saved from '../screens/saved/Saved';
 
 export type RootStackParamList = {
   RootTab: undefined,
@@ -53,6 +54,8 @@ const routes = () => {
               stringName = "person-sharp"
             } else if (route.name == "Notification") {
               stringName = "notifications-sharp"
+            } else if (route.name == "Saved") {
+              stringName = "bookmark-sharp"
             }
             return <Icon name={stringName} size={size} color={color} />;
           },
@@ -66,6 +69,7 @@ const routes = () => {
         }}
       >
         <Tab.Screen name="HomeNavigator" component={HomeNavigator} />
+        <Tab.Screen name="Saved" component={Saved}/>
         <Tab.Screen name="Notification" component={Notificaton} />
         <Tab.Screen name="Account" component={Account} />
       </Tab.Navigator>

@@ -85,7 +85,7 @@ const Store = ({ route }: StoreProp) => {
                 {store_bar_icon('bookmark-outline', 'Saved')}
                 {store_bar_icon('share-social-outline', 'Shared')}
             </View>
-            <ScrollView>
+            <ScrollView style={{ marginBottom: 140 }} showsVerticalScrollIndicator={false}>
                 <View style={{ backgroundColor: 'white' }}>
                     <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imgStore} />
                     <View style={styles.infoView}>
@@ -114,11 +114,11 @@ const Store = ({ route }: StoreProp) => {
                     <FlatList
                         data={foods}
                         renderItem={({ item }) => food_icon(item)}
-                        keyExtractor={item => item.food_id} /> 
+                        keyExtractor={item => item.food_id} />
                     <View style={[styles.orderItemView, { paddingVertical: 10, borderBottomWidth: 0 }]}>
-                        <View style={{ backgroundColor: "#D02128", flex: 1, height: 45, justifyContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity style={{ backgroundColor: "#D02128", flex: 1, height: 45, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={[styles.textWeightOrder, { color: 'white' }]}>Order</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
