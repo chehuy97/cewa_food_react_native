@@ -17,12 +17,8 @@ type StoreProp = {
 
 const Store = ({ route }: StoreProp) => {
 
-    const store_id = route.params.store_id
-
-    useEffect(() => {
-        console.log(store_id);
-
-    })
+    const storeItem = route.params.storeItem
+    const data = foods.filter((item:Food) => item.store_id== storeItem.store_id)
 
     const rating_icon = (data: number, name: string) => {
         return (
@@ -47,22 +43,10 @@ const Store = ({ route }: StoreProp) => {
     const food_icon = (item: Food) => {
         return (
             <View style={styles.orderItemView}>
-                <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={{ width: 50, height: 50 }} />
+                <Image source={require('../../assets/images/foods/tra_sua.png')} style={{ width: 50, height: 50 }} />
                 <View style={{ flex: 1, marginHorizontal: 10 }}>
                     <Text style={styles.textWeightOrder} numberOfLines={1}>{item.name}</Text>
                     <Text style={{ fontSize: 17, color: 'gray' }}>{item.price}</Text>
-                </View>
-                <Icon name="add-circle" size={40} color="#3689DF" />
-            </View>
-        )
-    }
-    const food_icon_test = () => {
-        return (
-            <View style={styles.orderItemView}>
-                <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={{ width: 50, height: 50 }} />
-                <View style={{ flex: 1, marginHorizontal: 10 }}>
-                    <Text style={styles.textWeightOrder} numberOfLines={1}>Mi quang ga trung</Text>
-                    <Text style={{ fontSize: 17, color: 'gray' }}>40,000d</Text>
                 </View>
                 <Icon name="add-circle" size={40} color="#3689DF" />
             </View>
@@ -87,9 +71,9 @@ const Store = ({ route }: StoreProp) => {
             </View>
             <ScrollView style={{ marginBottom: 140 }} showsVerticalScrollIndicator={false}>
                 <View style={{ backgroundColor: 'white' }}>
-                    <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imgStore} />
+                    <Image source={require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imgStore} />
                     <View style={styles.infoView}>
-                        <Text style={styles.textTitle}> Mi quang ba Mua</Text>
+                        <Text style={styles.textTitle}> {storeItem.name}</Text>
                     </View>
                     <View style={styles.infoViewShop}>
                         <View style={styles.iconShopView}>
@@ -103,7 +87,7 @@ const Store = ({ route }: StoreProp) => {
                         {rating_icon(17, "Check-in")}
                         {rating_icon(120, "Saved")}
                         <View style={styles.ratingPointView}>
-                            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>7.3</Text>
+                            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{storeItem.rating}</Text>
                         </View>
                     </View>
                 </View>
@@ -112,7 +96,7 @@ const Store = ({ route }: StoreProp) => {
                         <Text style={styles.textWeightOrder}>Top Orders</Text>
                     </View>
                     <FlatList
-                        data={foods}
+                        data={data}
                         renderItem={({ item }) => food_icon(item)}
                         keyExtractor={item => item.food_id} />
                     <View style={[styles.orderItemView, { paddingVertical: 10, borderBottomWidth: 0 }]}>

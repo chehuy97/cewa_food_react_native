@@ -5,19 +5,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import colors from '../constants/colors'
 import { createStackNavigator } from '@react-navigation/stack';
-import Account from '../screens/account/account';
-import Home from '../screens/home/Home';
-import Store from '../screens/store/Store';
-import Notificaton from '../screens/notification/notification'
-import SearchBar from '../components/searchbar/HomeSearchBar';
+import AccountScreen from '../screens/account/account';
+import HomeScreen from '../screens/home/Home';
+import StoreScreen from '../screens/store/Store';
+import NotificatonScreen from '../screens/notification/notification'
 import {navigationRef} from'./rootNavigation';
-import Saved from '../screens/saved/Saved';
+import SavedScreen from '../screens/saved/Saved';
+import { Store } from '../DummyData';
 
 export type RootStackParamList = {
   RootTab: undefined,
   Home: undefined,
   Store: {
-    store_id: string
+    storeItem: Store
   }
 
 }
@@ -34,8 +34,8 @@ const HomeNavigator = () => {
           backgroundColor: 'red'
         }
       }}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Store" component={Store} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Store" component={StoreScreen} />
     </Stack.Navigator>
   );
 };
@@ -69,9 +69,9 @@ const routes = () => {
         }}
       >
         <Tab.Screen name="HomeNavigator" component={HomeNavigator} />
-        <Tab.Screen name="Saved" component={Saved}/>
-        <Tab.Screen name="Notification" component={Notificaton} />
-        <Tab.Screen name="Account" component={Account} />
+        <Tab.Screen name="Saved" component={SavedScreen}/>
+        <Tab.Screen name="Notification" component={NotificatonScreen} />
+        <Tab.Screen name="Account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   )

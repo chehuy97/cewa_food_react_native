@@ -6,13 +6,13 @@ import { Store } from '../../DummyData'
 
 export interface StoreProps {
   data: Store,
-  callBack: () => any
+  callBack: (item:Store) => any
 }
 
 const StoreItem = ({ data, callBack }: StoreProps) => {
 
   const is_oustanding_store = (rating: Number) => {
-    if (rating >= 4.5) {
+    if (rating >= 7) {
       return true
     } else {
       return false
@@ -21,9 +21,9 @@ const StoreItem = ({ data, callBack }: StoreProps) => {
 
   return (
     <TouchableOpacity
-      onPress={() => callBack()}>
+      onPress={() => callBack(data)}>
       <View style={styles.container}>
-        <Image source={require('../../assets/images/foods/mi_quang.jpg')} style={styles.imageFood} />
+        <Image source={require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imageFood} />
         <View style={styles.containerInfo}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {is_oustanding_store(data.rating) ? <Icon name='star-sharp' size={20} color="#ECCE00" style={{ marginRight: 5 }} /> : null}

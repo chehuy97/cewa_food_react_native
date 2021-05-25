@@ -5,14 +5,14 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { Header } from 'react-native-elements'
 import SearchBar from '../../components/searchbar/HomeSearchBar'
 import StoreItem from '../../components/items/StoreItem'
-import { stores } from '../../DummyData'
+import { stores,Store } from '../../DummyData'
 import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {
 
-    const navigate_to_store_detail = () => {
+    const navigate_to_store_detail = (item:Store) => {
         navigate("Store", {
-            store_id: "Arthur"
+            storeItem:item
         })
     }
 
