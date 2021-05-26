@@ -7,7 +7,8 @@ import { RootStackParamList } from '../../routes/Routes'
 import { goBack } from '../../routes/rootNavigation'
 import dimens from '../../constants/dimens'
 import colors from '../../constants/colors'
-import { foods, Food } from '../../DummyData'
+import Food from '../../models/Food'
+import { foods } from '../../DummyData'
 
 type StoreRouteProp = RouteProp<RootStackParamList, 'Store'>
 
@@ -20,23 +21,23 @@ const Store = ({ route }: StoreProp) => {
     const storeItem = route.params.storeItem
     const data = foods.filter((item:Food) => item.store_id== storeItem.store_id)
 
+    const store_bar_icon = (imgName: string, iconName: string) => {
+        return (
+            <TouchableOpacity>
+                <View style={styles.storeBarIconView}>
+                    <Icon name={imgName} size={23} color="white" />
+                    <Text style={styles.storeBarIconText}>{iconName}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     const rating_icon = (data: number, name: string) => {
         return (
             <View style={styles.storeBarIconView}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{data}</Text>
                 <Text style={{ color: 'gray', fontSize: 15 }}>{name}</Text>
             </View>
-        )
-    }
-
-    const store_bar_icon = (imgName: string, iconName: string) => {
-        return (
-            <TouchableOpacity>
-                <View style={styles.storeBarIconView}>
-                    <Icon name={imgName} size={27} color="white" />
-                    <Text style={styles.storeBarIconText}>{iconName}</Text>
-                </View>
-            </TouchableOpacity>
         )
     }
 
@@ -69,7 +70,7 @@ const Store = ({ route }: StoreProp) => {
                 {store_bar_icon('bookmark-outline', 'Saved')}
                 {store_bar_icon('share-social-outline', 'Shared')}
             </View>
-            <ScrollView style={{ marginBottom: 140 }} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ marginBottom: dimens.phone_height*1/9+50}} showsVerticalScrollIndicator={false}>
                 <View style={{ backgroundColor: 'white' }}>
                     <Image source={require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imgStore} />
                     <View style={styles.infoView}>
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red'
     },
     storeBar: {
-        height: 60,
+        height: 50,
         backgroundColor: '#343434',
         flexDirection: 'row',
         alignItems: 'center',
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     },
     storeBarIconText: {
         color: 'white',
-        fontSize: 14
+        fontSize: 13
     },
     imgStore: {
         width: dimens.phone_width,

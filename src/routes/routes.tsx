@@ -11,7 +11,7 @@ import StoreScreen from '../screens/store/Store';
 import NotificatonScreen from '../screens/notification/notification'
 import {navigationRef} from'./rootNavigation';
 import SavedScreen from '../screens/saved/Saved';
-import { Store } from '../DummyData';
+import Store from '../models/Store';
 import dimens from '../constants/dimens';
 
 export type RootStackParamList = {

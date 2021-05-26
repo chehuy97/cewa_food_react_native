@@ -65,15 +65,6 @@ export const stores = [
     },
 ]
 
-export interface Store {
-    store_id: string,
-    name: string,
-    address: string,
-    type: string,
-    rating: number,
-    image:string
-}
-
 export const foods = [
     {
         "food_id": "1",
@@ -153,11 +144,3 @@ export const foods = [
         "image":"../../assets/images/foods/tra_sua.png"
     },
 ]
-
-export interface Food {
-    food_id: string,
-    name: string,
-    price: string,
-    image:string,
-    store_id:string
-}

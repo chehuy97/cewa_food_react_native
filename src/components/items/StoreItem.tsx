@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import dimens from '../../constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Store } from '../../DummyData'
+import Store from '../../models/Store'
 
 export interface StoreProps {
   data: Store,

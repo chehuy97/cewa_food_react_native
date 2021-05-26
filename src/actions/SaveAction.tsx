@@ -1,0 +1,9 @@
+
+
+export const SaveTypes = {
+    CHOOSE_STORE: 'CHOOSE_STORE',
+    CANCEL_STORE: 'CANCEL_STORE',
+    CHOOSE_DISH: 'CHOOSE_DISH',
+    CANCEL_DISH: 'CANCEL_DISH'
+}
+
