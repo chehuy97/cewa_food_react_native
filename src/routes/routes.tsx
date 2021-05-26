@@ -12,6 +12,7 @@ import NotificatonScreen from '../screens/notification/notification'
 import {navigationRef} from'./rootNavigation';
 import SavedScreen from '../screens/saved/Saved';
 import { Store } from '../DummyData';
+import dimens from '../constants/dimens';
 
 export type RootStackParamList = {
   RootTab: undefined,
@@ -65,7 +66,7 @@ const routes = () => {
           activeTintColor: 'red',
           inactiveTintColor: 'gray',
           showLabel: false,
-          style: { height: 50, backgroundColor: colors.bottom_bar }
+          style: { height: dimens.phone_height*1/12, backgroundColor: colors.bottom_bar }
         }}
       >
         <Tab.Screen name="HomeNavigator" component={HomeNavigator} />

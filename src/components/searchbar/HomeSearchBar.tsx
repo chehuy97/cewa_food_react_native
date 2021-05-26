@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import dimens from '../../constants/dimens'
+//import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 
 const HomeSearchBar = () => {
   const [searchValue, setSearchValue] = React.useState('')
@@ -20,9 +21,10 @@ const HomeSearchBar = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="red" />
+      <View style={styles.searchView}>
       <SearchBar
         platform="ios"
-        placeholder="Tìm kiếm món ăn, địa chỉ, ..."
+        placeholder="Find places, item, address..."
         onChangeText={text => { setSearchValue(text) }}
         value={searchValue}
         containerStyle={styles.containerSearchBar}
@@ -30,6 +32,7 @@ const HomeSearchBar = () => {
       />
       <View style={styles.cityModal}>
         <Text>Đà Nẵng</Text>
+      </View>
       </View>
     </View>
   );
@@ -41,20 +44,23 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'red',
     flexWrap: 'wrap',
-    height: 55,
+    height: dimens.phone_height*1/9,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    flexDirection: 'row'
+    flexDirection: 'column',
+    justifyContent:'flex-end'
   },
   containerSearchBar: {
-    flex: 3,
+    flex: 3.5,
     height:35,
+    backgroundColor:'red',
     justifyContent: 'center',
     borderBottomLeftRadius: 3,
     borderTopLeftRadius: 3,
   },
   inputSearchBar: {
-    fontSize: dimens.small_size
+    fontSize: dimens.small_size,
+
   },
   cityModal: {
     flex: 1,
@@ -64,6 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopRightRadius: 3,
     borderBottomRightRadius: 3,
+  },
+  searchView:{
+    flexDirection:'row'
   }
 });
 

@@ -45,7 +45,6 @@ export default StoreItem;
 const styles = StyleSheet.create({
   container: {
     width: dimens.phone_width * 0.46,
-    height: dimens.phone_height * 0.3,
     flexDirection: 'column',
     backgroundColor: 'white',
     marginHorizontal: dimens.phone_width * 0.02,
@@ -74,13 +73,14 @@ const styles = StyleSheet.create({
   containerTag: {
     flexDirection: 'row',
     marginTop: 7,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom:15
   },
   tagName: {
     marginLeft: 7,
     fontSize: dimens.normal_size,
     color: 'red',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   }
 
 });

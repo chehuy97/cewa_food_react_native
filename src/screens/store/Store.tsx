@@ -114,7 +114,7 @@ export default Store
 
 const styles = StyleSheet.create({
     header: {
-        height: 80,
+        height: dimens.phone_height*1/9,
         backgroundColor: 'red'
     },
     storeBar: {
