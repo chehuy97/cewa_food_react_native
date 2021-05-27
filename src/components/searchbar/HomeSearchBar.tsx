@@ -2,9 +2,12 @@ import * as React from 'react';
 import { Text, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import dimens from '../../constants/dimens'
-//import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 
-const HomeSearchBar = () => {
+export interface HomeSearchBarProps {
+  callBack: (value:string) => void
+}
+
+const HomeSearchBar = ({callBack}:HomeSearchBarProps) => {
   const [searchValue, setSearchValue] = React.useState('')
   
   const set_platform = () => {
@@ -25,7 +28,9 @@ const HomeSearchBar = () => {
       <SearchBar
         platform="ios"
         placeholder="Find places, item, address..."
-        onChangeText={text => { setSearchValue(text) }}
+        onChangeText={text => { 
+          setSearchValue(text) 
+          callBack(text) }}
         value={searchValue}
         containerStyle={styles.containerSearchBar}
         inputStyle={styles.inputSearchBar}

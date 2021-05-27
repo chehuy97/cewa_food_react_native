@@ -1,5 +1,5 @@
 export default interface Store {
-    store_id: string,
+    _id: string,
     name: string,
     address: string,
     type: string,

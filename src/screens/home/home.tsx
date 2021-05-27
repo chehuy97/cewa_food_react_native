@@ -14,13 +14,14 @@ const Home = () => {
 
     const defaultStores: Store[] = []
     const [stores, setStores]: [Store[], (stores: Store[]) => void] = useState(defaultStores)
+    const [searchValue,setSearchValue] = useState("")
 
     useEffect(() => {
         get_store_data()
-    }, [])
+    },[searchValue])
 
     const get_store_data = () => {
-        get_store().then(response => {            
+         get_store(searchValue).then(response => {            
             let data: Store[] = response.data.data
             setStores(data)
         }).catch(err => {
@@ -35,15 +36,21 @@ const Home = () => {
         })
     }
 
+    const filter_store = (value:string) => {
+        console.log("Search touch");
+        
+        setSearchValue(value)
+    }
+
     return (
         <View>
-            <SearchBar />
+            <SearchBar callBack={filter_store} />
             <View style={{ marginBottom: dimens.phone_height * 1 / 9 }}>
                 <FlatList
                     data={stores}
                     renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail} />}
                     numColumns={2}
-                    keyExtractor={item => item.store_id} />
+                    keyExtractor={item => item._id} />
             </View>
         </View>
     )

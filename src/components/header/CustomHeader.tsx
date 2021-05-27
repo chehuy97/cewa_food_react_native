@@ -22,7 +22,7 @@ const CustomHeader = () => {
 
     const show_app_bar = () => {
         if(isSearchSelected){
-            return <HomeSearchBar/>
+            return <HomeSearchBar callBack={() => {}}/>
         } else {
             return custom_header()
         }

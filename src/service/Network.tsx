@@ -11,11 +11,16 @@ type ResponeType =  {
     data:Store[]
 }
 
-export const get_store = ():Promise<AxiosResponse<ResponeType>> => {
-    return axios.get<ResponeType>(getStore,{
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        timeout:10000
+export const get_store = (search:string):Promise<AxiosResponse<ResponeType>> => {
+    var bodyFormData = new FormData()
+    bodyFormData.append('search',search)
+    
+    return axios.get(getStore, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      params:{
+          search:search
+      }
     })
 }
