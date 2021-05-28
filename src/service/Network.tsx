@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import Store from '../models/Store'
 
+//const base_api:string = "https://cewa-food.herokuapp.com"
 const base_api:string = "http://localhost:5000"
 const getStore:string = base_api+"/api/stores"
 
@@ -14,13 +15,10 @@ type ResponeType =  {
 export const get_store = (search:string):Promise<AxiosResponse<ResponeType>> => {
     var bodyFormData = new FormData()
     bodyFormData.append('search',search)
-    
-    return axios.get(getStore, {
+    let url = getStore+"/"+search
+    return axios.get(url, {
       headers: {
         'Content-Type': 'multipart/form-data',
-      },
-      params:{
-          search:search
       }
     })
 }
