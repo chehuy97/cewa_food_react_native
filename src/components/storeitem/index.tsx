@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import dimens from '../../constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
-import Store from '../../models/Store'
+import {Store} from '../../models/Store'
 
 export interface StoreProps {
   data: Store,
@@ -23,7 +23,7 @@ const StoreItem = ({ data, callBack }: StoreProps) => {
     <TouchableOpacity
       onPress={() => callBack(data)}>
       <View style={styles.container}>
-        <Image source={require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imageFood} />
+        <Image source={{uri:data.image}} style={styles.imageFood} />
         <View style={styles.containerInfo}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {is_oustanding_store(data.rating) ? <Icon name='star-sharp' size={20} color="#ECCE00" style={{ marginRight: 5 }} /> : null}

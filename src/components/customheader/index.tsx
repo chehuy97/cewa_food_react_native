@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import dimens from '../../constants/dimens'
-import HomeSearchBar from '../searchbar/HomeSearchBar'
+import HomeSearchBar from '../homesearchbar'
 
 const CustomHeader = () => {
     const [isSearchSelected, setIsSearchSelected] = useState(false)

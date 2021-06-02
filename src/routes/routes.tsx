@@ -5,13 +5,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import colors from '../constants/colors'
 import { createStackNavigator } from '@react-navigation/stack';
-import AccountScreen from '../screens/account/account';
-import HomeScreen from '../screens/home/Home';
-import StoreScreen from '../screens/store/Store';
-import NotificatonScreen from '../screens/notification/notification'
+import AccountScreen from '../screens/account';
+import HomeScreen from '../screens/home';
+import StoreScreen from '../screens/store';
+import NotificatonScreen from '../screens/notification'
 import {navigationRef} from'./rootNavigation';
-import SavedScreen from '../screens/saved/Saved';
-import Store from '../models/Store';
+import SavedScreen from '../screens/saved';
+import { Store } from '../models/Store';
 import dimens from '../constants/dimens';
 
 export type RootStackParamList = {

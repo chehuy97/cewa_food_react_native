@@ -7,7 +7,7 @@ import { RootStackParamList } from '../../routes/Routes'
 import { goBack } from '../../routes/rootNavigation'
 import dimens from '../../constants/dimens'
 import colors from '../../constants/colors'
-import Food from '../../models/Food'
+import { Food } from '../../models/Food'
 import { foods } from '../../DummyData'
 
 type StoreRouteProp = RouteProp<RootStackParamList, 'Store'>
@@ -19,8 +19,6 @@ type StoreProp = {
 const Store = ({ route }: StoreProp) => {
 
     const storeItem = route.params.storeItem
-    const data = foods.filter((item:Food) => item.store_id== storeItem.store_id)
-
     const store_bar_icon = (imgName: string, iconName: string) => {
         return (
             <TouchableOpacity>
@@ -96,10 +94,10 @@ const Store = ({ route }: StoreProp) => {
                     <View style={styles.orderItemView}>
                         <Text style={styles.textWeightOrder}>Top Orders</Text>
                     </View>
-                    <FlatList
-                        data={data}
+                    {/* <FlatList
+                        data={foods}
                         renderItem={({ item }) => food_icon(item)}
-                        keyExtractor={item => item.food_id} />
+                        keyExtractor={item => item._id} /> */}
                     <View style={[styles.orderItemView, { paddingVertical: 10, borderBottomWidth: 0 }]}>
                         <TouchableOpacity style={{ backgroundColor: "#D02128", flex: 1, height: 45, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={[styles.textWeightOrder, { color: 'white' }]}>Order</Text>

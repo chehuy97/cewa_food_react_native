@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import CustomHeader from '../../components/header/CustomHeader'
+import CustomHeader from '../../components/customheader'
 import colors from '../../constants/colors'
 import dimens from '../../constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'

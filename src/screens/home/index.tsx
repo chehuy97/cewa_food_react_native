@@ -3,9 +3,9 @@ import React, { Component, useEffect, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { Header } from 'react-native-elements'
-import SearchBar from '../../components/searchbar/HomeSearchBar'
-import StoreItem from '../../components/items/StoreItem'
-import Store from '../../models/Store'
+import SearchBar from '../../components/homesearchbar'
+import StoreItem from '../../components/storeitem'
+import { Store } from '../../models/Store'
 import { navigate } from '../../routes/rootNavigation'
 import dimens from '../../constants/dimens'
 import { get_store } from '../../service/Network'
@@ -14,7 +14,7 @@ const Home = () => {
 
     const defaultStores: Store[] = []
     const [stores, setStores]: [Store[], (stores: Store[]) => void] = useState(defaultStores)
-    const [searchValue,setSearchValue] = useState("")
+    const [searchValue,setSearchValue] = useState(" ")
 
     useEffect(() => {
         get_store_data()

@@ -1,7 +1,9 @@
-export default interface Food {
-    food_id: string,
+import { Store } from './Store'
+
+export interface Food {
+    _id: string,
     name: string,
     price: string,
     image:string,
-    store_id:string
+    store:Store
 }
