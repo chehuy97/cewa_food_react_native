@@ -1,9 +1,9 @@
-import { Store } from './Store'
+import { IStore } from './Store'
 
-export interface Food {
-    _id: string,
+export interface IFood {
+    id: string,
     name: string,
     price: string,
     image:string,
-    store:Store
+    store: IStore
 }

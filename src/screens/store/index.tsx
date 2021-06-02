@@ -1,5 +1,5 @@
 import { RouteProp } from '@react-navigation/core'
-import React, { Component, useEffect } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -7,8 +7,10 @@ import { RootStackParamList } from '../../routes/Routes'
 import { goBack } from '../../routes/rootNavigation'
 import dimens from '../../constants/dimens'
 import colors from '../../constants/colors'
-import { Food } from '../../models/Food'
-import { foods } from '../../DummyData'
+import { IFood, IStore } from '../../models'
+import { get_foods_in_store } from '../../service/Network'
+import { set } from 'react-native-reanimated'
+import StoreItem from '../../components/storeitem'
 
 type StoreRouteProp = RouteProp<RootStackParamList, 'Store'>
 
@@ -16,9 +18,29 @@ type StoreProp = {
     route: StoreRouteProp
 }
 
-const Store = ({ route }: StoreProp) => {
+const StoreScreen = ({ route }: StoreProp) => {
 
-    const storeItem = route.params.storeItem
+    const store_id = route.params.store_id
+    const defaulStore:any = null
+    const [store, setStore]:[IStore,(store:IStore) => void] = useState(defaulStore)
+
+    useEffect(() => {
+        console.log("id is " + store_id);
+        get_foods_from_store()
+    },[])
+    
+    const get_foods_from_store = async () => {
+        get_foods_in_store(store_id).then ( response => {
+            let data:IStore = response.data.data
+            setStore(data)
+            console.log(data);
+            
+        }).catch(err => {
+            console.log(err);
+            
+        })
+    }
+
     const store_bar_icon = (imgName: string, iconName: string) => {
         return (
             <TouchableOpacity>
@@ -39,10 +61,10 @@ const Store = ({ route }: StoreProp) => {
         )
     }
 
-    const food_icon = (item: Food) => {
+    const food_icon = (item: IFood) => {
         return (
             <View style={styles.orderItemView}>
-                <Image source={require('../../assets/images/foods/tra_sua.png')} style={{ width: 50, height: 50 }} />
+                <Image source={{uri:item.image}} style={{ width: 50, height: 50 }} />
                 <View style={{ flex: 1, marginHorizontal: 10 }}>
                     <Text style={styles.textWeightOrder} numberOfLines={1}>{item.name}</Text>
                     <Text style={{ fontSize: 17, color: 'gray' }}>{item.price}</Text>
@@ -58,7 +80,7 @@ const Store = ({ route }: StoreProp) => {
                 statusBarProps={{ backgroundColor: 'red' }}
                 containerStyle={styles.header}
                 leftComponent={<Icon name="chevron-back-outline" size={25} color="white" onPress={() => goBack()} />}
-                centerComponent={{ text: 'Store', style: { color: '#fff', fontSize: 20 } }}
+                centerComponent={{ text: store ? store.name : "store", style: { color: '#fff', fontSize: 18 } }}
                 rightComponent={<Icon name="ellipsis-horizontal-sharp" size={25} color="white" />}
             />
             <View style={styles.storeBar}>
@@ -70,9 +92,9 @@ const Store = ({ route }: StoreProp) => {
             </View>
             <ScrollView style={{ marginBottom: dimens.phone_height*1/9+50}} showsVerticalScrollIndicator={false}>
                 <View style={{ backgroundColor: 'white' }}>
-                    <Image source={require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imgStore} />
+                    <Image source={store ? {uri:store.image}:require('../../assets/images/foods/gong_cha.jpeg')} style={styles.imgStore} />
                     <View style={styles.infoView}>
-                        <Text style={styles.textTitle}> {storeItem.name}</Text>
+                        <Text style={styles.textTitle}> {store ? store.name:"store"}</Text>
                     </View>
                     <View style={styles.infoViewShop}>
                         <View style={styles.iconShopView}>
@@ -86,7 +108,7 @@ const Store = ({ route }: StoreProp) => {
                         {rating_icon(17, "Check-in")}
                         {rating_icon(120, "Saved")}
                         <View style={styles.ratingPointView}>
-                            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{storeItem.rating}</Text>
+                            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{store ? store.rating : "0.0."}</Text>
                         </View>
                     </View>
                 </View>
@@ -94,10 +116,10 @@ const Store = ({ route }: StoreProp) => {
                     <View style={styles.orderItemView}>
                         <Text style={styles.textWeightOrder}>Top Orders</Text>
                     </View>
-                    {/* <FlatList
-                        data={foods}
+                    <FlatList
+                        data={store ? store.foods:[]}
                         renderItem={({ item }) => food_icon(item)}
-                        keyExtractor={item => item._id} /> */}
+                        keyExtractor={item => item.id} />
                     <View style={[styles.orderItemView, { paddingVertical: 10, borderBottomWidth: 0 }]}>
                         <TouchableOpacity style={{ backgroundColor: "#D02128", flex: 1, height: 45, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={[styles.textWeightOrder, { color: 'white' }]}>Order</Text>
@@ -109,7 +131,7 @@ const Store = ({ route }: StoreProp) => {
     )
 }
 
-export default Store
+export default StoreScreen
 
 const styles = StyleSheet.create({
     header: {
@@ -138,7 +160,6 @@ const styles = StyleSheet.create({
         height: dimens.phone_height * 0.3
     },
     textTitle: {
-        fontWeight: 'bold',
         fontSize: 25,
     },
     infoView: {

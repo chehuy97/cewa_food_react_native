@@ -5,15 +5,15 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { Header } from 'react-native-elements'
 import SearchBar from '../../components/homesearchbar'
 import StoreItem from '../../components/storeitem'
-import { Store } from '../../models/Store'
+import { IStore } from '../../models/Store'
 import { navigate } from '../../routes/rootNavigation'
 import dimens from '../../constants/dimens'
 import { get_store } from '../../service/Network'
 
 const Home = () => {
 
-    const defaultStores: Store[] = []
-    const [stores, setStores]: [Store[], (stores: Store[]) => void] = useState(defaultStores)
+    const defaultStores: IStore[] = []
+    const [stores, setStores]: [IStore[], (stores: IStore[]) => void] = useState(defaultStores)
     const [searchValue,setSearchValue] = useState(" ")
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const Home = () => {
 
     const get_store_data = () => {
          get_store(searchValue).then(response => {            
-            let data: Store[] = response.data.data
+            let data: IStore[] = response.data.data
             setStores(data)
         }).catch(err => {
             console.log("Error is "+err);
@@ -30,9 +30,9 @@ const Home = () => {
         })
     }
 
-    const navigate_to_store_detail = (item: Store) => {
+    const navigate_to_store_detail = (item: IStore) => {
         navigate("Store", {
-            storeItem: item
+            store_id: item.id
         })
     }
 
@@ -50,7 +50,7 @@ const Home = () => {
                     data={stores}
                     renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail} />}
                     numColumns={2}
-                    keyExtractor={item => item._id} />
+                    keyExtractor={item => item.id} />
             </View>
         </View>
     )

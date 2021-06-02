@@ -11,14 +11,13 @@ import StoreScreen from '../screens/store';
 import NotificatonScreen from '../screens/notification'
 import {navigationRef} from'./rootNavigation';
 import SavedScreen from '../screens/saved';
-import { Store } from '../models/Store';
 import dimens from '../constants/dimens';
 
 export type RootStackParamList = {
   RootTab: undefined,
   Home: undefined,
   Store: {
-    storeItem: Store
+    store_id: string
   }
 
 }
