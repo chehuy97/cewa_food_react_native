@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-import dimens from '../../constants/dimens'
+import dimens from '../../utils/constants/dimens'
 import HomeSearchBar from '../homesearchbar'
 
 const CustomHeader = () => {

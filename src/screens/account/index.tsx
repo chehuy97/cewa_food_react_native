@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import CustomHeader from '../../components/customheader'
-import colors from '../../constants/colors'
-import dimens from '../../constants/dimens'
+import colors from '../../utils/constants/colors'
+import dimens from '../../utils/constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { getAccessToken } from '../../utils/storage'
+import { navigate } from '../../routes/rootNavigation'
 
 const Account = () => {
 
@@ -13,6 +15,17 @@ const Account = () => {
                 <Image source={require('../../assets/images/avatar.png')} style={styles.avatarImg} />
                 <TouchableOpacity>
                     <Text style={styles.avatarFont}>Profile</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+    const render_login_view = () => {
+        return (
+            <View style={[styles.avatarView, {flexDirection:'row-reverse'}]}>
+                <TouchableOpacity
+                onPress={() => navigate('Login')}>
+                    <Text style={styles.avatarFont}>Login</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -46,7 +59,7 @@ const Account = () => {
     return (
         <View style={styles.container}>
             <CustomHeader />
-            {render_avatar()}
+            { getAccessToken() ? render_login_view() : render_avatar()}
             <View style={styles.blockItemView}>
                 {render_item_account("Voucher", "pricetag-outline", colors.account_blue)}
             </View>
@@ -66,7 +79,7 @@ const Account = () => {
                 {render_item_account("Settings", "pricetag-outline", colors.account_gray)}
             </View>
             <View style={styles.blockItemView}>
-                {render_logout()}
+                {getAccessToken() ? null : render_logout()}
             </View>
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import CustomHeader from '../../components/customheader'
-import colors from '../../constants/colors'
-import dimens from '../../constants/dimens'
+import colors from '../../utils/constants/colors'
+import dimens from '../../utils/constants/dimens'
 
 const Saved = () => {
 

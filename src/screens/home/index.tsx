@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core'
 import React, { Component, useEffect, useState } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
@@ -7,7 +6,7 @@ import SearchBar from '../../components/homesearchbar'
 import StoreItem from '../../components/storeitem'
 import { IStore } from '../../models/Store'
 import { navigate } from '../../routes/rootNavigation'
-import dimens from '../../constants/dimens'
+import dimens from '../../utils/constants/dimens'
 import { get_store } from '../../service/Network'
 
 const Home = () => {

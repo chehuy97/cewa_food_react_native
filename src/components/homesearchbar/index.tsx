@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, StatusBar, Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import dimens from '../../constants/dimens'
+import dimens from '../../utils/constants/dimens'
 
 export interface HomeSearchBarProps {
   callBack: (value:string) => void

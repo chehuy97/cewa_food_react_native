@@ -3,23 +3,25 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
-import colors from '../constants/colors'
+import colors from '../utils/constants/colors'
 import { createStackNavigator } from '@react-navigation/stack';
 import AccountScreen from '../screens/account';
 import HomeScreen from '../screens/home';
 import StoreScreen from '../screens/store';
+import LoginScreen from '../screens/authentication/login'
 import NotificatonScreen from '../screens/notification'
 import {navigationRef} from'./rootNavigation';
 import SavedScreen from '../screens/saved';
-import dimens from '../constants/dimens';
+import dimens from '../utils/constants/dimens';
 
 export type RootStackParamList = {
   RootTab: undefined,
   Home: undefined,
   Store: {
     store_id: string
-  }
-
+  },
+  Account:undefined
+  Login:undefined
 }
 
 const Tab = createBottomTabNavigator();
@@ -39,6 +41,21 @@ const HomeNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+const AccountNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: 'red'
+        }
+      }}>
+      <Stack.Screen name="Account" component={AccountScreen}/>
+      <Stack.Screen name="Login" component={LoginScreen}/>
+    </Stack.Navigator>
+  )
+}
 
 const routes = () => {
 
@@ -71,7 +88,7 @@ const routes = () => {
         <Tab.Screen name="HomeNavigator" component={HomeNavigator} />
         <Tab.Screen name="Saved" component={SavedScreen}/>
         <Tab.Screen name="Notification" component={NotificatonScreen} />
-        <Tab.Screen name="Account" component={AccountScreen} />
+        <Tab.Screen name="AccountNavigator" component={AccountNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   )

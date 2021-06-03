@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import { IFood, IStore } from '../models'
 
-//const base_api:string = "https://cewa-food.herokuapp.com"
-const base_api: string = "http://localhost:5000"
+const base_api:string = "https://cewa-food.herokuapp.com"
+//const base_api: string = "http://localhost:5000"
 const store_api: string = base_api + "/api/stores"
 const food_api:string = base_api + '/api/foods'
 
