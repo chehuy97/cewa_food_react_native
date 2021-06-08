@@ -1,4 +1,4 @@
-import { IFood } from "./Food";
+import { IFood } from "./food";
 
 export interface IStore {
     id: string,

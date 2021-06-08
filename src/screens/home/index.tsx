@@ -4,10 +4,10 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { Header } from 'react-native-elements'
 import SearchBar from '../../components/homesearchbar'
 import StoreItem from '../../components/storeitem'
-import { IStore } from '../../models/Store'
+import { IStore } from '../../models/store'
 import { navigate } from '../../routes/rootNavigation'
 import dimens from '../../utils/constants/dimens'
-import { get_store } from '../../service/Network'
+import { get_store } from '../../service/network'
 
 const Home = () => {
 

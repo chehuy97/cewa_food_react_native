@@ -1,2 +1,2 @@
-export * from './Food'
-export * from './Store'
+export * from './food'
+export * from './store'

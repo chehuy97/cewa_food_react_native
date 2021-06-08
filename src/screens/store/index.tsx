@@ -8,7 +8,7 @@ import { goBack } from '../../routes/rootNavigation'
 import dimens from '../../utils/constants/dimens'
 import colors from '../../utils/constants/colors'
 import { IFood, IStore } from '../../models'
-import { get_foods_in_store } from '../../service/Network'
+import { get_foods_in_store } from '../../service/network'
 import { set } from 'react-native-reanimated'
 import StoreItem from '../../components/storeitem'
 

@@ -1,4 +1,4 @@
-import { IStore } from './Store'
+import { IStore } from './store'
 
 export interface IFood {
     id: string,
