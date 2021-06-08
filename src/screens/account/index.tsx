@@ -1,13 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import CustomHeader from '../../components/customheader'
 import colors from '../../utils/constants/colors'
 import dimens from '../../utils/constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { getAccessToken } from '../../utils/storage'
+import { getAccessToken, setAccessToken, setAccountID, setAccountUsername, setRefreshToken } from '../../utils/storage'
 import { navigate } from '../../routes/rootNavigation'
 
 const Account = () => {
+    const [accToken, setAccToken]= useState('')
+    useEffect(() => {
+        console.log("Run first");
+        
+        get_access_token()
+    },[accToken])
+
+    const get_access_token = async () =>{
+        let token = await getAccessToken()
+        if(token && token != ''){
+            setAccToken(token)
+        }
+    }
+
+    const logout_acount = () => {
+        setAccountID('')
+        setAccountUsername('')
+        setAccessToken('')
+        setRefreshToken('')
+        setAccToken('')
+    }
 
     const render_avatar = () => {
         return (
@@ -47,7 +68,8 @@ const Account = () => {
 
     const render_logout = () => {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => logout_acount()}>
                 <View style={[styles.itemView]}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </View>
@@ -59,7 +81,7 @@ const Account = () => {
     return (
         <View style={styles.container}>
             <CustomHeader />
-            { getAccessToken() ? render_login_view() : render_avatar()}
+            { accToken == '' ? render_login_view() : render_avatar()}
             <View style={styles.blockItemView}>
                 {render_item_account("Voucher", "pricetag-outline", colors.account_blue)}
             </View>
@@ -79,7 +101,7 @@ const Account = () => {
                 {render_item_account("Settings", "pricetag-outline", colors.account_gray)}
             </View>
             <View style={styles.blockItemView}>
-                {getAccessToken() ? null : render_logout()}
+                {accToken == '' ? null : render_logout()}
             </View>
 
 

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { IFood, IStore } from '../models'
-import { store_api, food_api, saved_store_api } from '../utils/constants'
+import { store_api, food_api, saved_store_api, login_api } from '../utils/constants'
 
 type ResponeType<T> = {
   httpStatusCode: number,
@@ -32,6 +32,23 @@ export const save_favorite_store = (account_id:string):Promise<AxiosResponse<Res
   return axios.get(url, {
     headers: {
       'Content-Type': 'multipart/form-data',
+    }
+  })
+}
+
+export const login = (email:string, pwd:string):Promise<AxiosResponse<ResponeType<any>>> => {
+  let loginForm = new FormData()
+  loginForm.append('email',email)
+  loginForm.append('password',pwd)
+  return axios({
+    method: 'post',
+    url: login_api,
+    data:{
+      email:email,
+      password: pwd
+    },
+    headers:{
+      'Content-Type': 'application/json'
     }
   })
 }

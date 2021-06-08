@@ -25,11 +25,10 @@ const StoreScreen = ({ route }: StoreProp) => {
     const [store, setStore]:[IStore,(store:IStore) => void] = useState(defaulStore)
 
     useEffect(() => {
-        console.log("id is " + store_id);
         get_foods_from_store()
     },[])
     
-    const get_foods_from_store = async () => {
+    const get_foods_from_store = () => {
         get_foods_in_store(store_id).then ( response => {
             let data:IStore = response.data.data
             setStore(data)

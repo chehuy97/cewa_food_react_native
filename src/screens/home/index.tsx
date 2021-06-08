@@ -16,6 +16,8 @@ const Home = () => {
     const [searchValue,setSearchValue] = useState(" ")
 
     useEffect(() => {
+        console.log('run second');
+        
         get_store_data()
     },[searchValue])
 
