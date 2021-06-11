@@ -10,3 +10,8 @@ export interface IUser {
     birthday:string,
     favorite_store:IStore[]
 }
+
+export interface userLoginWithEmail {
+    email:string,
+    password:string
+}

@@ -1,33 +1,46 @@
 import React, { Component, useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Alert } from 'react-native'
 import { Input } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import colors from '../../../utils/constants/colors'
 import dimens from '../../../utils/constants/dimens'
 import { goBack } from '../../../routes/rootNavigation'
-import { login } from '../../../service/network'
-import { setAccessToken, setRefreshToken, setAccountID, setAccountUsername } from '../../../utils/storage'
+import { userLoginWithEmail, login_request } from '../../../actions/userAction'
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handle_login = () => {
-        console.log("Email: " + email + " pwd: " + password);
-        login(email, password).then(response => {
-            let result = response.data
-            console.log("Access token "+ result.data.access_token);
+    const handle_login = async () => {
+        // console.log("Email: " + email + " pwd: " + password);
+        // login(email, password).then(response => {
+        //     let result = response.data
+        //     console.log("Access token "+ result.data.access_token);
             
-            setAccessToken(result.data.access_token)
-            setRefreshToken(result.data.refresh_token)
-            setAccountUsername(email)
-            setAccountID(result.data.user_id)
-            goBack()
-        }).catch(err => {
-            console.log(err);
+        //     setAccessToken(result.data.access_token)
+        //     setRefreshToken(result.data.refresh_token)
+        //     setAccountUsername(email)
+        //     setAccountID(result.data.user_id)
+        //     goBack()
+        // }).catch(err => {
+        //     console.log(err);
 
-        })
+        // })
+        if (validateEmail(email)) {
+            let user:userLoginWithEmail = {
+                email: email,
+                password: password
+            }
+            await login_request(user, goBack)
+        } else {
+            Alert.alert("Invalid email")
+        }
+    }
+
+    const validateEmail = (email:string) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 
     return (

@@ -6,8 +6,10 @@
  * @flow strict-local
  */
 import React from 'react';
-import { Text } from 'react-native';
 import Routes from './src/routes/Routes';
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux';
+import { persistor, store } from './src/store'
 
 
 const App = () => {
@@ -15,7 +17,11 @@ const App = () => {
   console.disableYellowBox = true;
 
   return (
-      <Routes/>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Routes/>
+        </PersistGate>
+      </Provider>
   )
 }
 
