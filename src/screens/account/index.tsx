@@ -6,28 +6,24 @@ import dimens from '../../utils/constants/dimens'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { getAccessToken, setAccessToken, setAccountID, setAccountUsername, setRefreshToken } from '../../utils/storage'
 import { navigate } from '../../routes/rootNavigation'
+import { useSelector } from '../../reducers'
+import { useDispatch } from 'react-redux'
+import { logout_request } from '../../actions/userAction'
 
 const Account = () => {
-    const [accToken, setAccToken]= useState('')
-    useEffect(() => {
-        console.log("Run first");
-        
-        get_access_token()
-    },[accToken])
+    const dispatch = useDispatch()
+    const userId = useSelector(state => state.user.id)
 
-    const get_access_token = async () =>{
-        let token = await getAccessToken()
-        if(token && token != ''){
-            setAccToken(token)
-        }
-    }
+    useEffect(() => {
+        console.log("hihi");
+        
+        //console.log("UserId is "+userId);
+        
+    })
 
     const logout_acount = () => {
-        setAccountID('')
-        setAccountUsername('')
-        setAccessToken('')
-        setRefreshToken('')
-        setAccToken('')
+        dispatch(logout_request())
+        console.log("Logout button tapped");  
     }
 
     const render_avatar = () => {
@@ -81,7 +77,7 @@ const Account = () => {
     return (
         <View style={styles.container}>
             <CustomHeader />
-            { accToken == '' ? render_login_view() : render_avatar()}
+            { userId == '' ? render_login_view() : render_avatar()}
             <View style={styles.blockItemView}>
                 {render_item_account("Voucher", "pricetag-outline", colors.account_blue)}
             </View>
@@ -101,7 +97,7 @@ const Account = () => {
                 {render_item_account("Settings", "pricetag-outline", colors.account_gray)}
             </View>
             <View style={styles.blockItemView}>
-                {accToken == '' ? null : render_logout()}
+                {userId == '' ? null : render_logout()}
             </View>
 
 

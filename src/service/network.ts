@@ -3,7 +3,7 @@ import { IFood, IStore } from '../models'
 import { store_api, food_api, saved_store_api, login_api } from '../utils/constants'
 import { userLoginWithEmail } from '../actions/userAction'
 
-type ResponeType<T> = {
+export type ResponeType<T> = {
   httpStatusCode: number,
   errorMessage: string,
   errorCode: string,

@@ -7,32 +7,20 @@ import colors from '../../../utils/constants/colors'
 import dimens from '../../../utils/constants/dimens'
 import { goBack } from '../../../routes/rootNavigation'
 import { userLoginWithEmail, login_request } from '../../../actions/userAction'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
+    const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handle_login = async () => {
-        // console.log("Email: " + email + " pwd: " + password);
-        // login(email, password).then(response => {
-        //     let result = response.data
-        //     console.log("Access token "+ result.data.access_token);
-            
-        //     setAccessToken(result.data.access_token)
-        //     setRefreshToken(result.data.refresh_token)
-        //     setAccountUsername(email)
-        //     setAccountID(result.data.user_id)
-        //     goBack()
-        // }).catch(err => {
-        //     console.log(err);
-
-        // })
         if (validateEmail(email)) {
             let user:userLoginWithEmail = {
                 email: email,
                 password: password
             }
-            await login_request(user, goBack)
+            await dispatch(login_request(user, goBack))
         } else {
             Alert.alert("Invalid email")
         }
