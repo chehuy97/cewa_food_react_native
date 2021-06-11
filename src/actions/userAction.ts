@@ -37,6 +37,8 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
             dispatch(login_success(userInfo))
             callback()
         }).catch(err => {
+            console.log("Error nek");
+            
             dispatch(login_failure(err))
         })
     }
@@ -49,13 +51,13 @@ export const login_success = (payload: userPayload): SuccessAction<userPayload> 
     }
 }
 
-export const login_failure = (err:Error): ErrorAction => {
+export const login_failure = (err:any): ErrorAction => {
     console.log(err);
     
     return {
         type: userActionTypes.LOGIN_FAILURE,
         payload: {
-            message: err.message
+            message: err.response.data.errorMessage
         }
     }
 }

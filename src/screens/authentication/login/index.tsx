@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, Alert, ActivityIndicator } from 'react-native'
 import { Input } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -13,22 +13,34 @@ const Login = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handle_login = async () => {
         if (validateEmail(email)) {
-            let user:userLoginWithEmail = {
+            setLoading(true)
+            let user: userLoginWithEmail = {
                 email: email,
                 password: password
             }
             await dispatch(login_request(user, goBack))
+            setLoading(false)
         } else {
             Alert.alert("Invalid email")
         }
     }
 
-    const validateEmail = (email:string) => {
+    const validateEmail = (email: string) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
+    }
+
+    const render_indicator = () => {
+        return (
+            <View style={styles.indicatorView}>
+            <ActivityIndicator />
+            <Text style={styles.indicatorText}>loading...</Text>
+        </View>
+        )
     }
 
     return (
@@ -76,6 +88,9 @@ const Login = () => {
                     <Text>Forgot Account?</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.indicatorView}>
+            {loading ? render_indicator() : null}
+            </View>
         </View>
 
     )
@@ -86,14 +101,15 @@ export default Login
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        color: colors.bg_page
     },
     loginContainer: {
         flex: 1,
         backgroundColor: colors.bg_page,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: dimens.phone_width / 16
+        paddingHorizontal: dimens.phone_width / 16,
     },
     inputStyle: {
         height: 40,
@@ -117,6 +133,19 @@ const styles = StyleSheet.create({
     backStyle: {
         height: 80,
         justifyContent: 'flex-end',
-        paddingLeft: 10
+        paddingLeft: 10,
+        backgroundColor: colors.bg_page
+    },
+    indicatorView: {
+        height: 40,
+        backgroundColor:colors.bg_page,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    indicatorText: {
+        color: 'gray',
+        fontSize: 17,
+        marginLeft: 10
     }
 })
