@@ -1,20 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { userActionTypes, userPayload, SuccessAction, userAction, ErrorAction } from '../reducers/userReducer'
-import { login, ResponeType } from '../service/network'
-import { IStore } from '../models/index'
-import { goBack } from '../routes/rootNavigation'
-
-
-export interface IUser {
-    id: string
-    email: string,
-    password: string,
-    name: string,
-    address: string,
-    gender: string,
-    birthday: string,
-    favorite_store: IStore[]
-}
+import { login } from '../service/network'
 
 export interface userLoginWithEmail {
     email: string,
@@ -38,7 +24,7 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
             callback()
         }).catch(err => {
             console.log("Error nek");
-            
+
             dispatch(login_failure(err))
         })
     }
@@ -51,9 +37,9 @@ export const login_success = (payload: userPayload): SuccessAction<userPayload> 
     }
 }
 
-export const login_failure = (err:any): ErrorAction => {
+export const login_failure = (err: any): ErrorAction => {
     console.log(err);
-    
+
     return {
         type: userActionTypes.LOGIN_FAILURE,
         payload: {
@@ -62,7 +48,7 @@ export const login_failure = (err:any): ErrorAction => {
     }
 }
 
-export const logout_request = ():SuccessAction<string> => {
+export const logout_request = (): SuccessAction<string> => {
     return {
         type: userActionTypes.LOGOUT_REQUEST,
         payload: "LOGOUT ACCOUNT"

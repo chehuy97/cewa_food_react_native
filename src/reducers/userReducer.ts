@@ -1,4 +1,5 @@
 import { Alert } from "react-native"
+import { IStore } from '../models'
 
 
 export const userActionTypes = {
@@ -24,6 +25,17 @@ export type userPayload = {
     email?:string,
     accessToken?:string,
     refreshToken?:string
+}
+
+export interface IUser {
+    id: string
+    email: string,
+    password: string,
+    name: string,
+    address: string,
+    gender: string,
+    birthday: string,
+    favorite_store: IStore[]
 }
 
 export interface SuccessAction<T> {
@@ -55,12 +67,7 @@ const reducer = (state:userPayload = defaultUserState, action:userAction):userPa
         case userActionTypes.LOGIN_SUCCESS:
             console.log("LOGIN SUCCESS CALLED");
             action = <SuccessAction<userPayload>>action
-            state = {
-                id: action.payload.id,
-                email: action.payload.email,
-                accessToken: action.payload.accessToken,
-                refreshToken: action.payload.refreshToken
-            }
+            state = action.payload
             return state
         case userActionTypes.LOGIN_FAILURE:
             console.log("LOGIN FAILURE CALLED");

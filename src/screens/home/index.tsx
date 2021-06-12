@@ -7,29 +7,43 @@ import StoreItem from '../../components/storeitem'
 import { IStore } from '../../models/store'
 import { navigate } from '../../routes/rootNavigation'
 import dimens from '../../utils/constants/dimens'
-import { get_store } from '../../service/network'
+import { useSelector } from '../../reducers'
+import { useDispatch } from 'react-redux'
+import { fetch_store } from '../../actions/storeAction'
 
 const Home = () => {
 
-    const defaultStores: IStore[] = []
-    const [stores, setStores]: [IStore[], (stores: IStore[]) => void] = useState(defaultStores)
+    // const defaultStores: IStore[] = []
+    // const [stores, setStores]: [IStore[], (stores: IStore[]) => void] = useState(defaultStores)
+
+    // useEffect(() => {
+    //     console.log('run second');
+        
+    //     get_store_data()
+    // },[searchValue])
+
+    // const get_store_data = () => {
+    //      get_store(searchValue).then(response => {            
+    //         let data: IStore[] = response.data.data
+    //         setStores(data)
+    //     }).catch(err => {
+    //         console.log("Error is "+err);
+            
+    //     })
+    // }
+
+    const stores = useSelector(state => state.store.stores)
+    const dispatch = useDispatch()
     const [searchValue,setSearchValue] = useState(" ")
 
     useEffect(() => {
-        console.log('run second');
-        
-        get_store_data()
-    },[searchValue])
+        fetch_all_store()
+    }, [searchValue])
 
-    const get_store_data = () => {
-         get_store(searchValue).then(response => {            
-            let data: IStore[] = response.data.data
-            setStores(data)
-        }).catch(err => {
-            console.log("Error is "+err);
-            
-        })
+    const fetch_all_store = async () => {
+        await dispatch(fetch_store(searchValue))
     }
+
 
     const navigate_to_store_detail = (item: IStore) => {
         navigate("Store", {

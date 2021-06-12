@@ -14,13 +14,6 @@ const Account = () => {
     const dispatch = useDispatch()
     const userId = useSelector(state => state.user.id)
 
-    useEffect(() => {
-        console.log("hihi");
-        
-        //console.log("UserId is "+userId);
-        
-    })
-
     const logout_acount = () => {
         dispatch(logout_request())
         console.log("Logout button tapped");  

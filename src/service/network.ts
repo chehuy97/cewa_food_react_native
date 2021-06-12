@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { IFood, IStore } from '../models'
+import { IFood, IStore } from '../reducers'
 import { store_api, food_api, saved_store_api, login_api } from '../utils/constants'
 import { userLoginWithEmail } from '../actions/userAction'
 
@@ -28,7 +28,21 @@ export const get_foods_in_store = (store_id: string): Promise<AxiosResponse<Resp
   })
 }
 
-export const save_favorite_store = (account_id:string):Promise<AxiosResponse<ResponeType<IStore>>> => {
+export const save_favorite_store = (account_id:string, store_id:string):Promise<AxiosResponse<ResponeType<any>>> => {
+  return axios({
+    method: 'post',
+    url: saved_store_api,
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    data:{
+      account_id: account_id,
+      store_api: store_id
+    }
+  })
+}
+
+export const show_favorite_store = (account_id:string):Promise<AxiosResponse<ResponeType<IStore[]>>> => {
   let url = saved_store_api+'/'+account_id
   return axios.get(url, {
     headers: {
@@ -38,9 +52,6 @@ export const save_favorite_store = (account_id:string):Promise<AxiosResponse<Res
 }
 
 export const login = (user:userLoginWithEmail):Promise<AxiosResponse<ResponeType<any>>> => {
-  // let loginForm = new FormData()
-  // loginForm.append('email',email)
-  // loginForm.append('password',pwd)
   return axios({
     method: 'post',
     url: login_api,
