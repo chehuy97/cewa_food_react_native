@@ -31,7 +31,7 @@ const Login = () => {
     }
 
     const navigate_to_home = () => {
-        navigate("Home")
+        navigate("Drawer")
     }
 
     const validateEmail = (email: string) => {

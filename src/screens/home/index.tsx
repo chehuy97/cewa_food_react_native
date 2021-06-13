@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Text, View, StyleSheet, Alert, BackHandler } from 'react-native'
 import { Header } from 'react-native-elements'
+import AppHeader from '../../components/appHeader'
 
 const Home = () => {
 
@@ -29,12 +30,7 @@ const Home = () => {
 
     return (
         <View>
-            <Header
-                placement="left"
-                leftComponent={{ icon: 'menu', color: '#fff' }}
-                centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-                rightComponent={{ icon: 'home', color: '#fff' }}
-            />
+            <AppHeader/>
             <Text>Home</Text>
         </View>
     )
