@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import React from 'react';
-import Routes from './src/routes/Routes';
+import Routes from './src/routes/routes';
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux';
 import { persistor, store } from './src/store'

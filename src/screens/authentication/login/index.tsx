@@ -8,6 +8,7 @@ import dimens from '../../../utils/constants/dimens'
 import { goBack } from '../../../routes/rootNavigation'
 import { userLoginWithEmail, login_request } from '../../../actions/userAction'
 import { useDispatch } from 'react-redux'
+import { navigate } from '../../../routes/rootNavigation'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -22,11 +23,15 @@ const Login = () => {
                 email: email,
                 password: password
             }
-            await dispatch(login_request(user, goBack))
+            await dispatch(login_request(user, navigate_to_home))
             setLoading(false)
         } else {
             Alert.alert("Invalid email")
         }
+    }
+
+    const navigate_to_home = () => {
+        navigate("Home")
     }
 
     const validateEmail = (email: string) => {
@@ -45,13 +50,13 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.backStyle}>
+            {/* <View style={styles.backStyle}>
                 <TouchableOpacity onPress={() => goBack()}>
                     <Icon name='chevron-back' size={30} color='black' />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={styles.loginContainer}>
-                <Text style={styles.titleStyle}>CEWA FOOD</Text>
+                <Text style={styles.titleStyle}>TODO APP</Text>
                 <Input
                     placeholder='email@address.com'
                     onChangeText={text => setEmail(text)}

@@ -9,59 +9,30 @@ import AccountScreen from '../screens/account';
 import HomeScreen from '../screens/home';
 import StoreScreen from '../screens/store';
 import LoginScreen from '../screens/authentication/login'
-import NotificatonScreen from '../screens/notification'
 import {navigationRef} from'./rootNavigation';
 import SavedScreen from '../screens/saved';
 import dimens from '../utils/constants/dimens';
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 export type RootStackParamList = {
   RootTab: undefined,
+  Login:undefined
   Home: undefined,
   Store: {
     store_id: string
   },
   Account:undefined
-  Login:undefined
 }
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>()
+const Drawer = createDrawerNavigator()
 
-const HomeNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: 'red'
-        }
-      }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Store" component={StoreScreen} />
-    </Stack.Navigator>
-  );
-};
-
-const AccountNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: 'red'
-        }
-      }}>
-      <Stack.Screen name="Account" component={AccountScreen}/>
-      <Stack.Screen name="Login" component={LoginScreen}/>
-    </Stack.Navigator>
-  )
-}
 
 const routes = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Tab.Navigator
+      {/* <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             var stringName: string = "home"
@@ -89,7 +60,14 @@ const routes = () => {
         <Tab.Screen name="Saved" component={SavedScreen}/>
         <Tab.Screen name="Notification" component={NotificatonScreen} />
         <Tab.Screen name="AccountNavigator" component={AccountNavigator} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
+      <Stack.Navigator
+            screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Login" component={LoginScreen}/>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

@@ -11,7 +11,7 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
     ThunkAction<Promise<void>, {}, {}, userAction> => {
     return (dispatch: ThunkDispatch<{}, {}, userAction>) => {
         return login(user).then(response => {
-            console.log("hehe");
+            console.log("login ok");
 
             let result = response.data
             let userInfo: userPayload = {
@@ -23,7 +23,7 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
             dispatch(login_success(userInfo))
             callback()
         }).catch(err => {
-            console.log("Error nek");
+            console.log("Error login fail");
 
             dispatch(login_failure(err))
         })

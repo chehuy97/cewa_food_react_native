@@ -1,72 +1,41 @@
-import React, { Component, useEffect, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import React, { useEffect } from 'react'
+import { Text, View, StyleSheet, Alert, BackHandler } from 'react-native'
 import { Header } from 'react-native-elements'
-import SearchBar from '../../components/homesearchbar'
-import StoreItem from '../../components/storeitem'
-import { IStore } from '../../models/store'
-import { navigate } from '../../routes/rootNavigation'
-import dimens from '../../utils/constants/dimens'
-import { useSelector } from '../../reducers'
-import { useDispatch } from 'react-redux'
-import { fetch_store } from '../../actions/storeAction'
 
 const Home = () => {
 
-    // const defaultStores: IStore[] = []
-    // const [stores, setStores]: [IStore[], (stores: IStore[]) => void] = useState(defaultStores)
-
-    // useEffect(() => {
-    //     console.log('run second');
-        
-    //     get_store_data()
-    // },[searchValue])
-
-    // const get_store_data = () => {
-    //      get_store(searchValue).then(response => {            
-    //         let data: IStore[] = response.data.data
-    //         setStores(data)
-    //     }).catch(err => {
-    //         console.log("Error is "+err);
-            
-    //     })
-    // }
-
-    const stores = useSelector(state => state.store.stores)
-    const dispatch = useDispatch()
-    const [searchValue,setSearchValue] = useState(" ")
-
     useEffect(() => {
-        fetch_all_store()
-    }, [searchValue])
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
 
-    const fetch_all_store = async () => {
-        await dispatch(fetch_store(searchValue))
-    }
-
-
-    const navigate_to_store_detail = (item: IStore) => {
-        navigate("Store", {
-            store_id: item.id
-        })
-    }
-
-    const filter_store = (value:string) => {
-        console.log("Search touch");
+      const backAction = () => {
+        console.log("back btn did tapped");
         
-        setSearchValue(value)
-    }
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
 
     return (
         <View>
-            <SearchBar callBack={filter_store} />
-            <View style={{ marginBottom: dimens.phone_height * 1 / 9 }}>
-                <FlatList
-                    data={stores}
-                    renderItem={({ item }) => <StoreItem data={item} callBack={navigate_to_store_detail} />}
-                    numColumns={2}
-                    keyExtractor={item => item.id} />
-            </View>
+            <Header
+                placement="left"
+                leftComponent={{ icon: 'menu', color: '#fff' }}
+                centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                rightComponent={{ icon: 'home', color: '#fff' }}
+            />
+            <Text>Home</Text>
         </View>
     )
 }
