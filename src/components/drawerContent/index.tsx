@@ -7,6 +7,7 @@ import { useSelector } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { logout_request } from '../../actions/userAction'
 import { navigate, goBack } from '../../routes/rootNavigation'
+import colors from '../../utils/constants/colors'
 const drawerContent = () => {
     const email = useSelector(state => state.user.email)
     let username = email?.split('@')[0]
@@ -59,7 +60,7 @@ const drawerContent = () => {
                 <Drawer.Item
                     icon={({ color, size }) => <Icon name="log-out-outline" size={20} color={color} />}
                     label="Signout"
-                    onPress={() => { }}
+                    onPress={() => { signout() }}
                 />
             </Drawer.Section>
         </View>
@@ -81,12 +82,11 @@ const styles = StyleSheet.create({
     avatarView: {
         width: 70,
         height: 70,
-        backgroundColor: '#1868ae',
+        backgroundColor: colors.app_color,
         borderRadius: 35,
         alignItems: 'center',
         justifyContent:'center',
-        marginLeft: 20,
-        marginRight: 20
+        marginHorizontal:10
     },
     avatarText: {
         color: 'white',

@@ -5,7 +5,7 @@ import AppHeader from '../../components/appHeader'
 const settings = () => {
     return (
         <View>
-            <AppHeader/>
+            <AppHeader title="Settings"/>
             <Text>Settings</Text>
         </View>
     )

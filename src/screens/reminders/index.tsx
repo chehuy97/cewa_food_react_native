@@ -5,7 +5,7 @@ import AppHeader from '../../components/appHeader'
 const reminders = () => {
     return (
         <View>
-            <AppHeader />
+            <AppHeader title="Reminders" />
             <Text>Reminder</Text>
         </View>
     )

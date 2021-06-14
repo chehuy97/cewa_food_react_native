@@ -5,7 +5,11 @@ import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { navigation } from '../../routes/rootNavigation'
 
-const appHeader = () => {
+interface appHeaderProps {
+    title:string
+}
+
+const appHeader = ({title}:appHeaderProps) => {
     return (
         <View>
             <Header
@@ -16,7 +20,7 @@ const appHeader = () => {
                 name='menu' 
                 color='#fff' 
                 size={25}/>}
-                centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                centerComponent={{ text: title, style: { color: '#fff', fontSize: 20 } }}
                 rightComponent={{ icon: 'home', color: '#fff' }}
             />
         </View>

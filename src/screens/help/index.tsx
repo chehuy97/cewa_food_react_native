@@ -5,7 +5,7 @@ import AppHeader from '../../components/appHeader'
 const helps = () => {
     return (
         <View>
-            <AppHeader/>
+            <AppHeader title="Help"/>
             <Text>Helps</Text>
         </View>
     )
