@@ -9,6 +9,7 @@ import settingScreen from '../screens/settings'
 import helpScreen from '../screens/help'
 import {navigationRef} from'./rootNavigation';
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import DrawerContent from '../components/drawerContent'
 
 export type RootStackParamList = {
   Login:undefined
@@ -27,7 +28,7 @@ const routes = () => {
 
   const drawer_navigator = () => {
     return (
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent/>}>
         <Drawer.Screen name="Home" component={homeScreen} />
         <Drawer.Screen name="Reminders" component={reminderScreen}/>
         <Drawer.Screen name="Settings" component={settingScreen}/>

@@ -42,19 +42,14 @@ const Login = () => {
     const render_indicator = () => {
         return (
             <View style={styles.indicatorView}>
-            <ActivityIndicator />
-            <Text style={styles.indicatorText}>loading...</Text>
-        </View>
+                <ActivityIndicator />
+                <Text style={styles.indicatorText}>loading...</Text>
+            </View>
         )
     }
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.backStyle}>
-                <TouchableOpacity onPress={() => goBack()}>
-                    <Icon name='chevron-back' size={30} color='black' />
-                </TouchableOpacity>
-            </View> */}
             <View style={styles.loginContainer}>
                 <Text style={styles.titleStyle}>TODO APP</Text>
                 <Input
@@ -94,7 +89,7 @@ const Login = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.indicatorView}>
-            {loading ? render_indicator() : null}
+                {loading ? render_indicator() : null}
             </View>
         </View>
 
@@ -143,7 +138,7 @@ const styles = StyleSheet.create({
     },
     indicatorView: {
         height: 40,
-        backgroundColor:colors.bg_page,
+        backgroundColor: colors.bg_page,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
