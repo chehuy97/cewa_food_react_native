@@ -7,42 +7,37 @@ import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
 import { notes, INote} from '../../DummyData'
 import { Item } from 'native-base'
+import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
+  //useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener(
+  //     "hardwareBackPress",
+  //     backAction
+  //   );
 
-    return () => backHandler.remove();
-  }, []);
+  //   return () => backHandler.remove();
+  // }, []);
 
-  const backAction = () => {
-    console.log("back btn did tapped");
+  // const backAction = () => {
+  //   console.log("back btn did tapped");
 
-    Alert.alert("Hold on!", "Are you sure you want to go back?", [
-      {
-        text: "Cancel",
-        onPress: () => null,
-        style: "cancel"
-      },
-      { text: "YES", onPress: () => BackHandler.exitApp() }
-    ]);
-    return true;
-  };
+  //   Alert.alert("Hold on!", "Are you sure you want to go back?", [
+  //     {
+  //       text: "Cancel",
+  //       onPress: () => null,
+  //       style: "cancel"
+  //     },
+  //     { text: "YES", onPress: () => BackHandler.exitApp() }
+  //   ]);
+  //   return true;
+  // };
 
   const render_note_item = (item:INote) => {
     return (
-      <TouchableOpacity style={styles.noteView}>
-        {/* <View style={styles.titleView}>
-          <Text style={[styles.textTitle, {marginRight: 10}]}>Title:</Text>
-          <Text style={styles.textTitle}>Play something make fun</Text>
-        </View>
-        <View style={styles.titleView}>
-          <Text style={[styles.textTitle, {marginRight: 10}]}>Title:</Text>
-          <Text style={styles.textTitle}>Play something make fun</Text>
-        </View> */}
+      <TouchableOpacity style={styles.noteView} onPress={() => navigate('EditNote', {
+        note: item
+      })}>
         <Text style={styles.textTitle}>{item.title}</Text>
         <Text style={styles.textContent}>{item.content.split("\n")[0]}</Text>
       </TouchableOpacity>
@@ -60,7 +55,9 @@ const Home = () => {
         />
       </View>
       <View style={styles.btnAddStyle}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('EditNote',{
+          note:null
+        })}>
           <Icon name="add-outline" size={50} color={colors.app_color} />
         </TouchableOpacity>
       </View>
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
     paddingLeft:20
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 22,
   },
   textContent: {
     fontSize: 17,

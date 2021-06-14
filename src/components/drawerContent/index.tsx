@@ -35,7 +35,7 @@ const drawerContent = () => {
                     <Drawer.Item
                         icon={({ color, size }) => <Icon name="bulb-outline" size={20} color={color} />}
                         label="Notes"
-                        onPress={() => { navigate("Home")}}
+                        onPress={() => { navigate("HomeNav")}}
                     />
                     <Drawer.Item
                         icon={({ color, size }) => <Icon name="notifications-outline" size={20} color={color} />}
