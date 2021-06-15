@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import colors from '../../../utils/constants/colors'
 import dimens from '../../../utils/constants/dimens'
-import { goBack } from '../../../routes/rootNavigation'
 import { userLoginWithEmail, login_request } from '../../../actions/userAction'
 import { useDispatch } from 'react-redux'
 import { navigate } from '../../../routes/rootNavigation'
@@ -15,6 +14,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    
 
     const handle_login = async () => {
         if (validateEmail(email)) {
@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
     loginStyle: {
         height: 40,
         width: dimens.phone_width * 14 / 16 - 20,
-        backgroundColor: 'red',
+        backgroundColor: colors.app_color,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20
     },
     titleStyle: {
-        color: 'red',
+        color: colors.app_color,
         fontWeight: 'bold',
         fontSize: 30,
         marginBottom: 50

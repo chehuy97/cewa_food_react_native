@@ -6,7 +6,6 @@ import homeScreen from '../screens/home';
 import loginScreen from '../screens/authentication/login'
 import reminderScreen from '../screens/reminders'
 import settingScreen from '../screens/settings'
-import addNoteScreen from '../screens/notes/addNote'
 import editNoteScreen from '../screens/notes/editNote'
 import helpScreen from '../screens/help'
 import { navigationRef } from './rootNavigation';
@@ -18,7 +17,6 @@ export type RootStackParamList = {
   Login: undefined
   Drawer: undefined,
   Home: undefined,
-  AddNote: undefined,
   EditNote: {
     note:INote
   },
@@ -37,7 +35,6 @@ const routes = () => {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
            <Stack.Screen name="Home" component={homeScreen} />
-           <Stack.Screen name="AddNote" component={addNoteScreen} />
            <Stack.Screen name="EditNote" component={editNoteScreen} />
       </Stack.Navigator>
     )

@@ -1,12 +1,15 @@
 import { RouteProp } from '@react-navigation/core'
 import Icon from 'react-native-vector-icons/Ionicons'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
 import NoteHeader from '../../components/noteHeader'
-import { INote, notes } from '../../DummyData'
+import { INote } from '../../DummyData'
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
-import { goBack } from '../../routes/rootNavigation'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getAppTheme,setAppTheme } from '../../utils/storage'
+import {appTheme} from '../../utils/constants/storage'
+
 
 type editRouteProp = RouteProp<RootStackParamList, 'EditNote'>
 
@@ -16,12 +19,30 @@ type editNoteProp = {
 
 const editNote = ({ route }: editNoteProp) => {
     const note: INote = route.params.note
-    const [noteTheme, setNoteTheme] = useState(colors.yellow_theme)
+    const [noteTheme, setNoteTheme] = useState(getAppTheme())
+
+    const [theme,setTheme] = useState(colors.yellow_theme)
+
+    useEffect(() => {
+        get_theme()
+    },[noteTheme])
+
+    const get_theme = async () => {
+        let color = await AsyncStorage.getItem(appTheme)
+        if(color){
+            setNoteTheme(color)
+        }
+    }
+
+    const set_theme_color = async (color:string) => {
+        setNoteTheme(color)
+        await AsyncStorage.setItem(appTheme, color)
+    }
 
     const render_button_theme = (color: string) => {
         return (
             <TouchableOpacity
-                onPress={() => setNoteTheme(color)}
+                onPress={() => set_theme_color(color)}
                 style={[styles.themeButtonView, { backgroundColor: color }]}>
                 {noteTheme == color ? <Icon name='checkmark' size={25} color='white' />:null}
             </TouchableOpacity>
