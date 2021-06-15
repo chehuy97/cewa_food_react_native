@@ -10,28 +10,6 @@ import { Item } from 'native-base'
 import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {
-  //useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener(
-  //     "hardwareBackPress",
-  //     backAction
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, []);
-
-  // const backAction = () => {
-  //   console.log("back btn did tapped");
-
-  //   Alert.alert("Hold on!", "Are you sure you want to go back?", [
-  //     {
-  //       text: "Cancel",
-  //       onPress: () => null,
-  //       style: "cancel"
-  //     },
-  //     { text: "YES", onPress: () => BackHandler.exitApp() }
-  //   ]);
-  //   return true;
-  // };
 
   const render_note_item = (item: INote) => {
     return (
