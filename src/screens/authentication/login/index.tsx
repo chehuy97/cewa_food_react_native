@@ -11,6 +11,7 @@ import { navigate } from '../../../routes/rootNavigation'
 import { getAppTheme } from '../../../utils/storage'
 import { set_theme } from '../../../actions/themeAction'
 import { useSelector} from '../../../reducers'
+import { validateEmail } from '../../../utils/validation'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -47,11 +48,6 @@ const Login = () => {
 
     const navigate_to_home = () => {
         navigate("Drawer")
-    }
-
-    const validateEmail = (email: string) => {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
     }
 
     const render_indicator = () => {
