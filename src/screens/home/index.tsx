@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Text, View, StyleSheet, Alert, BackHandler, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Header } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
 import { notes, INote } from '../../DummyData'
-import { Item } from 'native-base'
 import { navigate } from '../../routes/rootNavigation'
 
 const Home = () => {

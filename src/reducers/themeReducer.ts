@@ -13,7 +13,7 @@ export type themePayload = {
 }
 
 export const defaultState:themePayload = {
-    themeColor: colors.yellow_theme
+    themeColor: colors.blue_theme
 }
 
 export type ThemeActionSuccess =  {
