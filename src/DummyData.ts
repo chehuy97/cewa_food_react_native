@@ -21,3 +21,17 @@ export interface INote{
     title:string,
     content:string
 }
+
+export interface IReminder {
+    reminder_id:string,
+    note: INote,
+    time: Date
+}
+
+export const reminders:IReminder[] = [
+    {
+        reminder_id:'1',
+        note: notes[0],
+        time: new Date()
+    }
+]

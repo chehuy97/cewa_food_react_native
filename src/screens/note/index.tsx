@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/core'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, Platform, Button } from 'react-native'
 import { INote } from '../../DummyData'
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
@@ -10,6 +10,7 @@ import { goBack } from '../../routes/rootNavigation'
 import { setAppTheme } from '../../utils/storage'
 import { useDispatch } from 'react-redux'
 import { set_theme } from '../../actions/themeAction'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 type noteRouteProp = RouteProp<RootStackParamList, 'Note'>
@@ -18,27 +19,43 @@ type noteProp = {
     route: noteRouteProp
 }
 
+type AndroidMode = 'date' | 'time';
+
 const note = ({ route }: noteProp) => {
     const dispatch = useDispatch()
+    //const modeDate:AndroidMode = 'date'
     const note: INote = route.params.note
     const theme = useSelector(state => state.theme.themeColor)
     const [title, setTitle] = useState(note.title)
     const [content, setContent] = useState(note.content)
+    // const [date, setDate] = useState(new Date(1598051730000));
+    // const [mode, setMode]= useState(modeDate);
+    // const [show, setShow] = useState(false);
 
-    // useEffect(() => {
-    //     get_theme()
-    // }, [noteTheme])
+    const fakeDate = new Date(2020, 5, 15, 17, 0, 0, 0);
 
-    // const get_theme = async () => {
-    //     let color = await AsyncStorage.getItem(appTheme)
-    //     if (color) {
-    //         setNoteTheme(color)
-    //     }
-    // }
+    // const onChange = (event: Event, selectedDate: Date) => {
+    //     const currentDate = selectedDate || date;
+    //     setShow(Platform.OS === 'ios');
+    //     setDate(currentDate);
+    // };
+
+    // const showMode = (currentMode: AndroidMode) => {
+    //     setShow(true);
+    //     setMode(currentMode);
+    // };
+
+    // const showDatepicker = () => {
+    //     showMode('date');
+    // };
+
+    // const showTimepicker = () => {
+    //     showMode('time');
+    // };
 
     const set_theme_color = async (color: string) => {
         await setAppTheme(color)
-        dispatch(set_theme(color))     
+        dispatch(set_theme(color))
     }
 
     const backAction = () => {
@@ -55,6 +72,10 @@ const note = ({ route }: noteProp) => {
             goBack()
         }
     };
+
+    const set_reminder = () => {
+        
+    }
 
     const render_button_theme = (color: string) => {
         return (
@@ -76,6 +97,9 @@ const note = ({ route }: noteProp) => {
                     <TouchableOpacity onPress={() => { }} style={styles.iconTailStyle}>
                         <Icon name="trash-outline" size={25} color="gray" />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { set_reminder()}} style={styles.iconTailStyle}>
+                        <Icon name="notifications-outline" size={25} color="gray" />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => { }} style={styles.iconTailStyle}>
                         <Icon name="download-outline" size={25} color="gray" />
                     </TouchableOpacity>
@@ -87,6 +111,24 @@ const note = ({ route }: noteProp) => {
     return (
         <View style={[styles.container, { backgroundColor: theme }]}>
             {render_header()}
+            {/* <View>
+                <View>
+                    <Button onPress={showDatepicker} title="Show date picker!" />
+                </View>
+                <View>
+                    <Button onPress={showTimepicker} title="Show time picker!" />
+                </View>
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={() => onchange}
+                    />
+                )}
+            </View> */}
             <ScrollView style={{ paddingHorizontal: 10, flex: 1 }}>
                 <TextInput
                     multiline={true}

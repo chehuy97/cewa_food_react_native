@@ -8,6 +8,7 @@ import reminderScreen from '../screens/reminders'
 import settingScreen from '../screens/settings'
 import noteScreen from '../screens/note'
 import helpScreen from '../screens/help'
+import registerScreen from '../screens/authentication/register'
 import { navigationRef } from './rootNavigation';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import DrawerContent from '../components/drawerContent'
@@ -22,7 +23,8 @@ export type RootStackParamList = {
   },
   Reminders: undefined,
   Settings: undefined,
-  Help: undefined
+  Help: undefined,
+  Register: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -58,6 +60,7 @@ const routes = () => {
         }}>
         <Stack.Screen name="Login" component={loginScreen} />
         <Stack.Screen name="Drawer" component={drawer_navigator} />
+        <Stack.Screen name="Register" component={registerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

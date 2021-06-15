@@ -99,8 +99,8 @@ const Login = () => {
                     style={[styles.loginStyle, {backgroundColor: theme}]}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>Forgot Account?</Text>
+                <TouchableOpacity onPress={() => navigate("Register")}>
+                    <Text style={{fontSize:17}}>Register</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.indicatorView}>

@@ -13,18 +13,6 @@ interface appHeaderProps {
 
 const appHeader = ({title}:appHeaderProps) => {
     const theme = useSelector(state => state.theme.themeColor)
-    // const [theme,setTheme] = useState(colors.yellow_theme)
-
-    // useEffect(() => {
-    //     get_theme()
-    // },[theme])
-
-    // const get_theme = async () => {
-    //     let color = await AsyncStorage.getItem(appTheme)
-    //     if(color){
-    //         setTheme(color)
-    //     }
-    // }
 
     return (
         <View>
