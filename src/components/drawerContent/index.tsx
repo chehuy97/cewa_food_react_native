@@ -7,12 +7,12 @@ import { useSelector } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { logout_request } from '../../actions/userAction'
 import { navigate, goBack } from '../../routes/rootNavigation'
-import colors from '../../utils/constants/colors'
 const drawerContent = () => {
     const email = useSelector(state => state.user.email)
-    let username = email?.split('@')[0]
-    let firstLetter = username?.charAt(0).toUpperCase()
-    let dispatch = useDispatch()
+    const username = email?.split('@')[0]
+    const firstLetter = username?.charAt(0).toUpperCase()
+    const theme = useSelector(state => state.theme.themeColor)
+    const dispatch = useDispatch()
 
     const signout = () => {
         dispatch(logout_request)
@@ -23,7 +23,7 @@ const drawerContent = () => {
         <View style={styles.container}>
             <DrawerContentScrollView>
                 <View style={styles.headerView}>
-                    <View style={styles.avatarView}>
+                    <View style={[styles.avatarView,{backgroundColor: theme}]}>
                         <Text style={styles.avatarText}>{firstLetter}</Text>
                     </View>
                     <View>
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     avatarView: {
         width: 70,
         height: 70,
-        backgroundColor: colors.app_color,
         borderRadius: 35,
         alignItems: 'center',
         justifyContent:'center',

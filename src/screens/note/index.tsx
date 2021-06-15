@@ -5,10 +5,11 @@ import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert 
 import { INote } from '../../DummyData'
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getAppTheme, setAppTheme } from '../../utils/storage'
-import { appTheme } from '../../utils/constants/storage'
+import { useSelector } from '../../reducers'
 import { goBack } from '../../routes/rootNavigation'
+import { setAppTheme } from '../../utils/storage'
+import { useDispatch } from 'react-redux'
+import { set_theme } from '../../actions/themeAction'
 
 
 type noteRouteProp = RouteProp<RootStackParamList, 'Note'>
@@ -18,25 +19,26 @@ type noteProp = {
 }
 
 const note = ({ route }: noteProp) => {
+    const dispatch = useDispatch()
     const note: INote = route.params.note
-    const [noteTheme, setNoteTheme] = useState(getAppTheme())
+    const theme = useSelector(state => state.theme.themeColor)
     const [title, setTitle] = useState(note.title)
     const [content, setContent] = useState(note.content)
 
-    useEffect(() => {
-        get_theme()
-    }, [noteTheme])
+    // useEffect(() => {
+    //     get_theme()
+    // }, [noteTheme])
 
-    const get_theme = async () => {
-        let color = await AsyncStorage.getItem(appTheme)
-        if (color) {
-            setNoteTheme(color)
-        }
-    }
+    // const get_theme = async () => {
+    //     let color = await AsyncStorage.getItem(appTheme)
+    //     if (color) {
+    //         setNoteTheme(color)
+    //     }
+    // }
 
     const set_theme_color = async (color: string) => {
-        setNoteTheme(color)
-        await AsyncStorage.setItem(appTheme, color)
+        await setAppTheme(color)
+        dispatch(set_theme(color))     
     }
 
     const backAction = () => {
@@ -59,14 +61,14 @@ const note = ({ route }: noteProp) => {
             <TouchableOpacity
                 onPress={() => set_theme_color(color)}
                 style={[styles.themeButtonView, { backgroundColor: color }]}>
-                {noteTheme == color ? <Icon name='checkmark' size={25} color='white' /> : null}
+                {theme == color ? <Icon name='checkmark' size={25} color='white' /> : null}
             </TouchableOpacity>
         )
     }
 
     const render_header = () => {
         return (
-            <View style={[styles.headerContainer, { backgroundColor: noteTheme }]}>
+            <View style={[styles.headerContainer, { backgroundColor: theme }]}>
                 <TouchableOpacity onPress={() => backAction()}>
                     <Icon name="chevron-back-outline" size={25} color="gray" />
                 </TouchableOpacity>
@@ -83,7 +85,7 @@ const note = ({ route }: noteProp) => {
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: noteTheme }]}>
+        <View style={[styles.container, { backgroundColor: theme }]}>
             {render_header()}
             <ScrollView style={{ paddingHorizontal: 10, flex: 1 }}>
                 <TextInput

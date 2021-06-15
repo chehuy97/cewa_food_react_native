@@ -5,16 +5,14 @@ import { View, Text } from 'react-native'
 import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { navigation } from '../../routes/rootNavigation'
-import colors from '../../utils/constants/colors'
-import { getAppTheme } from '../../utils/storage'
-import {appTheme} from '../../utils/constants/storage'
+import { useSelector } from '../../reducers'
 
 interface appHeaderProps {
     title:string
 }
 
 const appHeader = ({title}:appHeaderProps) => {
-
+    const theme = useSelector(state => state.theme.themeColor)
     // const [theme,setTheme] = useState(colors.yellow_theme)
 
     // useEffect(() => {
@@ -32,6 +30,8 @@ const appHeader = ({title}:appHeaderProps) => {
         <View>
             <Header
                 placement="left"
+                statusBarProps={{backgroundColor:theme}}
+                containerStyle={{backgroundColor:theme}}
                 leftComponent={
                 <Icon 
                 onPress={() => { navigation.dispatch(DrawerActions.openDrawer()) }}

@@ -16,12 +16,20 @@ export const defaultState:themePayload = {
     themeColor: colors.yellow_theme
 }
 
-export type ThemeActionRequest =  {
+export type ThemeActionSuccess =  {
     type:string,
     payload: themePayload
 }
 
 
-const reducer = (state = defaultState,action:ThemeActionRequest):themePayload => {
-    return action.payload
+const reducer = (state = defaultState,action:ThemeActionSuccess):themePayload => {
+    switch (action.type) {
+        case themeActionTypes.THEME_SUCCESS:
+            state = action.payload
+            return state
+        default:
+            return state    
+    }
 }
+
+export default reducer

@@ -8,12 +8,27 @@ import dimens from '../../../utils/constants/dimens'
 import { userLoginWithEmail, login_request } from '../../../actions/userAction'
 import { useDispatch } from 'react-redux'
 import { navigate } from '../../../routes/rootNavigation'
+import { getAppTheme } from '../../../utils/storage'
+import { set_theme } from '../../../actions/themeAction'
+import { useSelector} from '../../../reducers'
 
 const Login = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const theme = useSelector(state => state.theme.themeColor)
+
+    useEffect(() => {
+        set_theme_color()
+      })
+    
+      const set_theme_color = async () => {
+        let color = await getAppTheme()
+        if(color){
+          dispatch(set_theme(color))
+        }
+      }
     
 
     const handle_login = async () => {
@@ -51,7 +66,7 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <View style={styles.loginContainer}>
-                <Text style={styles.titleStyle}>TODO APP</Text>
+                <Text style={[styles.titleStyle,{color: theme}]}>TODO APP</Text>
                 <Input
                     placeholder='email@address.com'
                     onChangeText={text => setEmail(text)}
@@ -81,7 +96,7 @@ const Login = () => {
                 />
                 <TouchableOpacity
                     onPress={() => handle_login()}
-                    style={styles.loginStyle}>
+                    style={[styles.loginStyle, {backgroundColor: theme}]}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -119,13 +134,11 @@ const styles = StyleSheet.create({
     loginStyle: {
         height: 40,
         width: dimens.phone_width * 14 / 16 - 20,
-        backgroundColor: colors.app_color,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20
     },
     titleStyle: {
-        color: colors.app_color,
         fontWeight: 'bold',
         fontSize: 30,
         marginBottom: 50
