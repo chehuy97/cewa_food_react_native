@@ -5,7 +5,7 @@ import { Header } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
-import { notes, INote} from '../../DummyData'
+import { notes, INote } from '../../DummyData'
 import { Item } from 'native-base'
 import { navigate } from '../../routes/rootNavigation'
 
@@ -33,9 +33,9 @@ const Home = () => {
   //   return true;
   // };
 
-  const render_note_item = (item:INote) => {
+  const render_note_item = (item: INote) => {
     return (
-      <TouchableOpacity style={styles.noteView} onPress={() => navigate('EditNote', {
+      <TouchableOpacity style={styles.noteView} onPress={() => navigate('Note', {
         note: item
       })}>
         <Text style={styles.textTitle}>{item.title}</Text>
@@ -46,17 +46,21 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="Home"/>
+      <AppHeader title="Home" />
       <View>
         <FlatList
-        data={notes}
-        renderItem={ ({ item }) => render_note_item(item)}
-        keyExtractor={item => item.note_id}
+          data={notes}
+          renderItem={({ item }) => render_note_item(item)}
+          keyExtractor={item => item.note_id}
         />
       </View>
       <View style={styles.btnAddStyle}>
-        <TouchableOpacity onPress={() => navigate('EditNote',{
-          note:null
+        <TouchableOpacity onPress={() => navigate('Note', {
+          note: {
+            note_id: '',
+            title: '',
+            content: ''
+          }
         })}>
           <Icon name="add-outline" size={50} color={colors.app_color} />
         </TouchableOpacity>
@@ -84,18 +88,18 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: "#ececec",
     margin: 5,
-    borderRadius:5,
-    justifyContent:'center',
-    paddingLeft:20
+    borderRadius: 5,
+    justifyContent: 'center',
+    paddingLeft: 20
   },
   textTitle: {
     fontSize: 22,
   },
   textContent: {
     fontSize: 17,
-    color:'gray'
+    color: 'gray'
   },
-  titleView:{
-    flexDirection:'row',
+  titleView: {
+    flexDirection: 'row',
   }
 })

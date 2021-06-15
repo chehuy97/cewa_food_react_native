@@ -6,7 +6,7 @@ import homeScreen from '../screens/home';
 import loginScreen from '../screens/authentication/login'
 import reminderScreen from '../screens/reminders'
 import settingScreen from '../screens/settings'
-import editNoteScreen from '../screens/notes/editNote'
+import noteScreen from '../screens/note'
 import helpScreen from '../screens/help'
 import { navigationRef } from './rootNavigation';
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -17,7 +17,7 @@ export type RootStackParamList = {
   Login: undefined
   Drawer: undefined,
   Home: undefined,
-  EditNote: {
+  Note: {
     note:INote
   },
   Reminders: undefined,
@@ -35,7 +35,7 @@ const routes = () => {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
            <Stack.Screen name="Home" component={homeScreen} />
-           <Stack.Screen name="EditNote" component={editNoteScreen} />
+           <Stack.Screen name="Note" component={noteScreen} />
       </Stack.Navigator>
     )
   }
