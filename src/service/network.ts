@@ -63,7 +63,7 @@ export const add_new_note = (note:INote, token:string): Promise<AxiosResponse<Re
     method:'POST',
     url:note_api,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
       'access-token':token
     },
     data:{
@@ -74,15 +74,17 @@ export const add_new_note = (note:INote, token:string): Promise<AxiosResponse<Re
   })
 }
 
-export const edit_note = (note:INote, token:string): Promise<AxiosResponse<ResponeType<INote[]>>> => {  
+export const edit_note = (note:INote, token:string): Promise<AxiosResponse<ResponeType<INote[]>>> => { 
+  console.log(note);
   return axios({
     method:'PUT',
     url:note_api,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
       'access-token':token
     },
     data:{
+      id: note.id,
       title: note.title,
       content: note.content,
       account_id: note.account_id
@@ -94,7 +96,7 @@ export const remove_note = (note_id:string, token:string): Promise<AxiosResponse
     method:'DELETE',
     url:note_api,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
       'access-token':token
     },
     data:{

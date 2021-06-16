@@ -12,7 +12,7 @@ import registerScreen from '../screens/authentication/register'
 import { navigationRef } from './rootNavigation';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import DrawerContent from '../components/drawerContent'
-import { INote } from '../DummyData';
+import { INote } from '../reducers'
 
 export type RootStackParamList = {
   Login: undefined

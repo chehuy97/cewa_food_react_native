@@ -1,3 +1,4 @@
+import { ToastAndroid } from "react-native"
 
 export const noteActionTypes = {
     NOTE_FAILURE: 'NOTE_FAILURE',
@@ -12,7 +13,7 @@ export const noteActionTypes = {
 }
 
 export interface INote {
-    note_id: string,
+    id: string,
     title: string,
     content: string,
     account_id:string
@@ -43,12 +44,12 @@ export interface ActionError {
         message:string
     }
 }
-export type  noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionError
+export type  noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionError
 
 export const defaultState:notePayload = {
     notes: [],
     note: {
-        note_id: '',
+        id: '',
         title: '',
         content: '',
         account_id:''
@@ -62,6 +63,10 @@ const reducer = (state = defaultState, action:noteAction):notePayload => {
             action = <ActionSuccess<noteList>>action
             state = {...state,notes: action.payload.notes}
             return state
+        case noteActionTypes.NOTE_FAILURE:
+            action=<ActionError>action
+            state={...state, errorMessage:action.payload.message}
+            ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);   
         default:
             return state
     }

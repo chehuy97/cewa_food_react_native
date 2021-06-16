@@ -4,22 +4,21 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
-// import { notes, INote } from '../../DummyData'
 import { navigate } from '../../routes/rootNavigation'
 import { fetch_all_notes } from '../../actions/noteAction'
 import { useSelector, INote } from '../../reducers'
 import { useDispatch } from 'react-redux'
-import Spinner from 'react-native-loading-spinner-overlay';
+import { useIsFocused } from '@react-navigation/native'
 
 const Home = () => {
   const auth = useSelector(state => state.user.auth)
   const notes = useSelector(state => state.note.notes)
   const dispatch = useDispatch()
+  const isFocus = useIsFocused()
+
   useEffect(() => {
-    console.log('home screen');
-    
     get_all_notes()
-  },[])
+  },[isFocus])
 
   const get_all_notes = async () => {
     await dispatch(fetch_all_notes(auth.id, auth.accessToken))
@@ -39,24 +38,20 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <AppHeader title="Home" />
-      {/* <Spinner
-          visible={true}
-          textContent={'Loading...'}
-          textStyle={{color:'gray'}}
-        /> */}
       <View>
         <FlatList
           data={notes}
           renderItem={({ item }) => render_note_item(item)}
-          keyExtractor={item => item.note_id}
+          keyExtractor={item => item.id}
         />
       </View>
       <View style={styles.btnAddStyle}>
         <TouchableOpacity onPress={() => navigate('Note', {
           note: {
-            note_id: '',
+            id: '',
             title: '',
-            content: ''
+            content: '',
+            account_id:''
           }
         })}>
           <Icon name="add-outline" size={50} color={colors.app_color} />

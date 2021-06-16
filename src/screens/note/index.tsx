@@ -2,15 +2,14 @@ import { RouteProp } from '@react-navigation/core'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, Platform, Button } from 'react-native'
-import { INote } from '../../DummyData'
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
-import { useSelector } from '../../reducers'
+import { useSelector, INote } from '../../reducers'
 import { goBack } from '../../routes/rootNavigation'
 import { setAppTheme } from '../../utils/storage'
 import { useDispatch } from 'react-redux'
 import { set_theme } from '../../actions/themeAction'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { edit_one_note, add_note, remove_one_note } from '../../actions/noteAction'
 
 
 type noteRouteProp = RouteProp<RootStackParamList, 'Note'>
@@ -19,39 +18,14 @@ type noteProp = {
     route: noteRouteProp
 }
 
-type AndroidMode = 'date' | 'time';
-
 const note = ({ route }: noteProp) => {
+
     const dispatch = useDispatch()
-    //const modeDate:AndroidMode = 'date'
     const note: INote = route.params.note
     const theme = useSelector(state => state.theme.themeColor)
+    const auth = useSelector(state => state.user.auth)
     const [title, setTitle] = useState(note.title)
     const [content, setContent] = useState(note.content)
-    // const [date, setDate] = useState(new Date(1598051730000));
-    // const [mode, setMode]= useState(modeDate);
-    // const [show, setShow] = useState(false);
-
-    const fakeDate = new Date(2020, 5, 15, 17, 0, 0, 0);
-
-    // const onChange = (event: Event, selectedDate: Date) => {
-    //     const currentDate = selectedDate || date;
-    //     setShow(Platform.OS === 'ios');
-    //     setDate(currentDate);
-    // };
-
-    // const showMode = (currentMode: AndroidMode) => {
-    //     setShow(true);
-    //     setMode(currentMode);
-    // };
-
-    // const showDatepicker = () => {
-    //     showMode('date');
-    // };
-
-    // const showTimepicker = () => {
-    //     showMode('time');
-    // };
 
     const set_theme_color = async (color: string) => {
         await setAppTheme(color)
@@ -73,8 +47,39 @@ const note = ({ route }: noteProp) => {
         }
     };
 
+    const handle_save_note = async () => {
+        if (title == note.title && content == note.content) {
+            goBack()
+        } else {
+            let aNote:INote ={ 
+                id:note.id,
+                title:title,
+                content:content,
+                account_id:auth.id
+            }
+            if(note.title == '' && note.content == ''){
+                //add new note
+                console.log('add note');
+                await dispatch(add_note(aNote,auth.accessToken))
+                goBack()
+            } else {
+                //edit note
+                console.log('edit note');
+                await dispatch(edit_one_note(aNote, auth.accessToken))
+                goBack()
+                
+            }
+        }
+    }
+
+    const handle_remove_note = async () => {
+        await dispatch(remove_one_note(note.id, auth.accessToken))
+        goBack()
+    }
+
     const set_reminder = () => {
-        
+        console.log('set reminder');
+
     }
 
     const render_button_theme = (color: string) => {
@@ -94,13 +99,13 @@ const note = ({ route }: noteProp) => {
                     <Icon name="chevron-back-outline" size={25} color="gray" />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.iconTailStyle}>
+                    <TouchableOpacity onPress={() => { handle_remove_note() }} style={styles.iconTailStyle}>
                         <Icon name="trash-outline" size={25} color="gray" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { set_reminder()}} style={styles.iconTailStyle}>
+                    <TouchableOpacity onPress={() => { set_reminder() }} style={styles.iconTailStyle}>
                         <Icon name="notifications-outline" size={25} color="gray" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }} style={styles.iconTailStyle}>
+                    <TouchableOpacity onPress={() => { handle_save_note() }} style={styles.iconTailStyle}>
                         <Icon name="download-outline" size={25} color="gray" />
                     </TouchableOpacity>
                 </View>
@@ -111,24 +116,6 @@ const note = ({ route }: noteProp) => {
     return (
         <View style={[styles.container, { backgroundColor: theme }]}>
             {render_header()}
-            {/* <View>
-                <View>
-                    <Button onPress={showDatepicker} title="Show date picker!" />
-                </View>
-                <View>
-                    <Button onPress={showTimepicker} title="Show time picker!" />
-                </View>
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={() => onchange}
-                    />
-                )}
-            </View> */}
             <ScrollView style={{ paddingHorizontal: 10, flex: 1 }}>
                 <TextInput
                     multiline={true}
