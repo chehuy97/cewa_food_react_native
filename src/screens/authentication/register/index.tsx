@@ -1,27 +1,41 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { useSelector } from '../../../reducers'
+import { IUser, useSelector } from '../../../reducers'
 import { Input } from 'react-native-elements'
 import colors from '../../../utils/constants/colors'
 import dimens from '../../../utils/constants/dimens'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { validateEmail, validatePassword, validateBirthday } from '../../../utils/validation'
+import { useDispatch } from 'react-redux'
+import { register_request } from '../../../actions/userAction'
+import { register } from '../../../service/network'
 
-const register = () => {
+const index = () => {
     const theme = useSelector(state => state.theme.themeColor)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [name, setName] = useState('')
-    const [birthday, setBirthday] = useState('11/11/1997')
+    const [birthday, setBirthday] = useState('')
     const [gender, setGender] = useState('male')
     const [address, setAddress] = useState('')
+    const dispatch = useDispatch()
     
 
-    const handle_register = () => {
+    const handle_register = async () => {
         if(validateEmail(email) && name != '' && address != '' && validateBirthday(birthday) && validatePassword(password) && confirmPassword == password){
-            console.log('handle register');
+            //register
+            let user:IUser = {
+                id:'',
+                email:email,
+                password:password,
+                name:name,
+                address: address,
+                gender:gender,
+                birthday:birthday
+            }
+               await dispatch(register_request(user))
         } else{
             Alert.alert('Alert', 'Please validate all field')
         }
@@ -168,7 +182,7 @@ const register = () => {
     )
 }
 
-export default register
+export default index
 
 const styles = StyleSheet.create({
     container: {

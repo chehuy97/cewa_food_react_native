@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { logout_request } from '../../actions/userAction'
 import { navigate } from '../../routes/rootNavigation'
 const drawerContent = () => {
-    const email = useSelector(state => state.user.email)
+    const email = useSelector(state => state.user.auth.email)
     const username = email?.split('@')[0]
     const firstLetter = username?.charAt(0).toUpperCase()
     const theme = useSelector(state => state.theme.themeColor)
