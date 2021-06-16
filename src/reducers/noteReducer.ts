@@ -1,18 +1,21 @@
 
 export const noteActionTypes = {
-    NOTE_SUCCESS: 'NOTE_SUCCESS',
     NOTE_FAILURE: 'NOTE_FAILURE',
     NOTE_FETCH_REQUEST: 'NOTE_FETCH_REQUEST',
+    NOTE_FETCH_SUCCESS: 'NOTE_FETCH_SUCCESS',
     NOTE_ADD_REQUEST: 'NOTE_ADD_REQUEST',
+    NOTE_ADD_SUCCESS: 'NOTE_ADD_SUCCESS',
     NOTE_EDIT_REQUEST: 'NOTE_EDIT_REQUEST',
+    NOTE_EDIT_SUCCESS: 'NOTE_EDIT_SUCCESS',
     NOTE_REMOVE_REQUEST: 'NOTE_REMOVE_REQUEST',
-    NOTE_SAVE_REQUEST: 'NOTE_SAVE_REQUEST'
+    NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS'
 }
 
 export interface INote {
     note_id: string,
     title: string,
-    content: string
+    content: string,
+    account_id:string
 }
 
 export type noteList = {
@@ -47,13 +50,18 @@ export const defaultState:notePayload = {
     note: {
         note_id: '',
         title: '',
-        content: ''
+        content: '',
+        account_id:''
     },
     errorMessage: ''
 }
 
 const reducer = (state = defaultState, action:noteAction):notePayload => {
     switch(action.type){
+        case noteActionTypes.NOTE_FETCH_SUCCESS: 
+            action = <ActionSuccess<noteList>>action
+            state = {...state,notes: action.payload.notes}
+            return state
         default:
             return state
     }

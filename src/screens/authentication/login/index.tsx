@@ -10,8 +10,9 @@ import { useDispatch } from 'react-redux'
 import { navigate } from '../../../routes/rootNavigation'
 import { getAppTheme } from '../../../utils/storage'
 import { set_theme } from '../../../actions/themeAction'
-import { useSelector} from '../../../reducers'
+import { useSelector } from '../../../reducers'
 import { validateEmail } from '../../../utils/validation'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -22,15 +23,15 @@ const Login = () => {
 
     useEffect(() => {
         set_theme_color()
-      })
-    
-      const set_theme_color = async () => {
+    })
+
+    const set_theme_color = async () => {
         let color = await getAppTheme()
-        if(color){
-          dispatch(set_theme(color))
+        if (color) {
+            dispatch(set_theme(color))
         }
-      }
-    
+    }
+
 
     const handle_login = async () => {
         if (validateEmail(email)) {
@@ -61,8 +62,13 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
+            <Spinner
+                visible={loading}
+                textContent={'Loading...'}
+                textStyle={{ color: 'gray' }}
+            />
             <View style={styles.loginContainer}>
-                <Text style={[styles.titleStyle,{color: theme}]}>TODO APP</Text>
+                <Text style={[styles.titleStyle, { color: theme }]}>TODO APP</Text>
                 <Input
                     placeholder='email@address.com'
                     onChangeText={text => setEmail(text)}
@@ -92,15 +98,12 @@ const Login = () => {
                 />
                 <TouchableOpacity
                     onPress={() => handle_login()}
-                    style={[styles.loginStyle, {backgroundColor: theme}]}>
+                    style={[styles.loginStyle, { backgroundColor: theme }]}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate("Register")}>
-                    <Text style={{fontSize:17}}>Register</Text>
+                    <Text style={{ fontSize: 17 }}>Register</Text>
                 </TouchableOpacity>
-            </View>
-            <View style={styles.indicatorView}>
-                {loading ? render_indicator() : null}
             </View>
         </View>
 

@@ -31,10 +31,10 @@ export type userInfo = {
 }
 
 export type userAuth = {
-    id?: string,
-    email?: string,
-    accessToken?: string,
-    refreshToken?: string
+    id: string,
+    email: string,
+    accessToken: string,
+    refreshToken: string
 }
 
 export type userPayload = {
@@ -94,6 +94,7 @@ const reducer = (state: userPayload = defaultUserState, action: userAction): use
         case userActionTypes.LOGIN_SUCCESS:
             console.log("LOGIN SUCCESS CALLED");
             action = <SuccessAction<userAuth>>action
+            
             state = {...state, auth: action.payload}
             return state
         case userActionTypes.LOGIN_FAILURE:

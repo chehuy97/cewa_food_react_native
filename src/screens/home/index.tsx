@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View, StyleSheet, Alert, BackHandler, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
-import { notes, INote } from '../../DummyData'
+// import { notes, INote } from '../../DummyData'
 import { navigate } from '../../routes/rootNavigation'
+import { fetch_all_notes } from '../../actions/noteAction'
+import { useSelector, INote } from '../../reducers'
+import { useDispatch } from 'react-redux'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Home = () => {
+  const auth = useSelector(state => state.user.auth)
+  const notes = useSelector(state => state.note.notes)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log('home screen');
+    
+    get_all_notes()
+  },[])
+
+  const get_all_notes = async () => {
+    await dispatch(fetch_all_notes(auth.id, auth.accessToken))
+  }
 
   const render_note_item = (item: INote) => {
     return (
@@ -23,6 +39,11 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <AppHeader title="Home" />
+      {/* <Spinner
+          visible={true}
+          textContent={'Loading...'}
+          textStyle={{color:'gray'}}
+        /> */}
       <View>
         <FlatList
           data={notes}

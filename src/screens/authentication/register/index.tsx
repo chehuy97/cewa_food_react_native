@@ -3,13 +3,12 @@ import { Alert, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { IUser, useSelector } from '../../../reducers'
 import { Input } from 'react-native-elements'
-import colors from '../../../utils/constants/colors'
 import dimens from '../../../utils/constants/dimens'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { validateEmail, validatePassword, validateBirthday } from '../../../utils/validation'
 import { useDispatch } from 'react-redux'
 import { register_request } from '../../../actions/userAction'
-import { register } from '../../../service/network'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const index = () => {
     const theme = useSelector(state => state.theme.themeColor)
@@ -20,12 +19,14 @@ const index = () => {
     const [birthday, setBirthday] = useState('')
     const [gender, setGender] = useState('male')
     const [address, setAddress] = useState('')
+    const [loading,setLoading] = useState(false)
     const dispatch = useDispatch()
     
 
     const handle_register = async () => {
         if(validateEmail(email) && name != '' && address != '' && validateBirthday(birthday) && validatePassword(password) && confirmPassword == password){
             //register
+            setLoading(true)
             let user:IUser = {
                 id:'',
                 email:email,
@@ -36,6 +37,7 @@ const index = () => {
                 birthday:birthday
             }
                await dispatch(register_request(user))
+               setLoading(false)
         } else{
             Alert.alert('Alert', 'Please validate all field')
         }
@@ -65,6 +67,11 @@ const index = () => {
             {/* <View style={styles.headerView}>
                 <Icon name='chevron-back-outline' size={25} color='black'/>
             </View> */}
+            <Spinner
+                visible={loading}
+                textContent={'Loading...'}
+                textStyle={{ color: 'gray' }}
+            />
             <View style={styles.registerContainer}>
                 <Text style={[styles.titleStyle, { color: theme }]}>Register</Text>
                 <Input

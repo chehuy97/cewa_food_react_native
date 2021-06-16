@@ -2,6 +2,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { userActionTypes, userPayload, SuccessAction, userAction, ErrorAction, userAuth, IUser } from '../reducers/userReducer'
 import { goBack } from '../routes/rootNavigation'
 import { login, register } from '../service/network'
+import {ToastAndroid} from 'react-native'
 
 export interface userLoginWithEmail {
     email: string,
@@ -12,13 +13,12 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
     ThunkAction<Promise<void>, {}, {}, userAction> => {
     return (dispatch: ThunkDispatch<{}, {}, userAction>) => {
         return login(user).then(response => {
-            console.log("login ok");
-
             let result = response.data
+            
             let userAuth: userAuth = {
-                id: result.data.id,
+                id: result.data.user_id,
                 email: user.email,
-                accessToken: result.data.access_token,
+                accessToken: 'bearer '+result.data.access_token,
                 refreshToken: result.data.refresh_token
             }
             dispatch(login_success(userAuth))
@@ -61,6 +61,7 @@ export const register_request = (user: IUser):ThunkAction<Promise<void>, {}, {},
         return register(user).then(res => {
             dispatch(register_success),
             goBack()
+            ToastAndroid.show("Register successfully", ToastAndroid.SHORT);
         }).catch(err => {
             dispatch(err.response.data.errorMessage)
         })
