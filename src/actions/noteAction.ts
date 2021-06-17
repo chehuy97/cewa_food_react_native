@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { ErrorAction } from '../reducers'
-import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList } from '../reducers/noteReducer'
+import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList, noteDetail } from '../reducers/noteReducer'
 import { get_all_notes, add_new_note, edit_note, remove_note } from '../service/network'
 
 export const fetch_all_notes = (account_id: string, token:string): ThunkAction<Promise<void>, {}, {}, noteAction> => {
@@ -28,7 +28,7 @@ export const add_note = (note:INote, token:string): ThunkAction<Promise<void>, {
     return (dispatch: ThunkDispatch<{}, {}, noteAction>) => {
         return add_new_note(note, token).then(res => {
             console.log('add success');           
-            dispatch(add_note_success('add note successful'))
+            dispatch(add_note_success(note))
         }).catch(err => {
             console.log("add failure");
             
@@ -37,10 +37,12 @@ export const add_note = (note:INote, token:string): ThunkAction<Promise<void>, {
     }
 }
 
-const add_note_success = (msg:string):ActionSuccess<string> => {
+const add_note_success = (note:INote):ActionSuccess<noteDetail> => {
     return {
         type: noteActionTypes.NOTE_ADD_SUCCESS,
-        payload: msg
+        payload: {
+            note:note
+        }
     }
 }
 
@@ -48,7 +50,7 @@ export const edit_one_note = (note:INote, token:string): ThunkAction<Promise<voi
     return (dispatch: ThunkDispatch<{}, {}, noteAction>) => {
         return edit_note(note, token).then(res => {
             console.log("edit success "+res);  
-            dispatch(edit_note_success('edit note successful'))
+            dispatch(edit_note_success(note))
         }).catch(err => {
             console.log("edit fail");
             
@@ -57,10 +59,12 @@ export const edit_one_note = (note:INote, token:string): ThunkAction<Promise<voi
     }
 }
 
-const edit_note_success = (msg:string):ActionSuccess<string> => {
+const edit_note_success = (note:INote):ActionSuccess<noteDetail> => {
     return {
         type: noteActionTypes.NOTE_EDIT_SUCCESS,
-        payload: msg
+        payload: {
+            note: note
+        }
     }
 }
 

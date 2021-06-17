@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: dimens.phone_width / 16,
     },
     inputStyle: {
-        height: 40,
+        height: 45,
         backgroundColor: 'white',
         paddingHorizontal: 10
     },

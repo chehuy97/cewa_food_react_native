@@ -16,57 +16,66 @@ export interface INote {
     id: string,
     title: string,
     content: string,
-    account_id:string
+    account_id: string
 }
 
 export type noteList = {
-    notes:INote[]
+    notes: INote[]
 }
 
 export type noteDetail = {
-    note:INote
+    note: INote
 }
 
 export type notePayload = {
     notes: INote[],
-    note:INote,
-    errorMessage:string
+    noteUpdate: INote,
+    noteReminders: INote[],
+    errorMessage: string
 }
 
 export interface ActionSuccess<T> {
-    type:string,
-    payload:T
+    type: string,
+    payload: T
 }
 
 export interface ActionError {
     type: string,
-    payload:{
-        message:string
+    payload: {
+        message: string
     }
 }
-export type  noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionError
+export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionError
 
-export const defaultState:notePayload = {
+export const defaultState: notePayload = {
     notes: [],
-    note: {
+    noteUpdate: {
         id: '',
         title: '',
         content: '',
-        account_id:''
+        account_id: ''
     },
+    noteReminders: [],
     errorMessage: ''
 }
 
-const reducer = (state = defaultState, action:noteAction):notePayload => {
-    switch(action.type){
-        case noteActionTypes.NOTE_FETCH_SUCCESS: 
+const reducer = (state = defaultState, action: noteAction): notePayload => {
+    switch (action.type) {
+        case noteActionTypes.NOTE_FETCH_SUCCESS:
             action = <ActionSuccess<noteList>>action
-            state = {...state,notes: action.payload.notes}
+            state = { ...state, notes: action.payload.notes }
+            return state
+        case noteActionTypes.NOTE_EDIT_SUCCESS:
+            
+            return state
+        case noteActionTypes.NOTE_ADD_SUCCESS:
+            return state
+        case noteActionTypes.NOTE_REMOVE_SUCCESS:
             return state
         case noteActionTypes.NOTE_FAILURE:
-            action=<ActionError>action
-            state={...state, errorMessage:action.payload.message}
-            ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);   
+            action = <ActionError>action
+            state = { ...state, errorMessage: action.payload.message }
+            ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);
         default:
             return state
     }

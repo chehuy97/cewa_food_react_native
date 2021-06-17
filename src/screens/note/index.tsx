@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert,
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
 import { useSelector, INote } from '../../reducers'
-import { goBack } from '../../routes/rootNavigation'
+import { goBack, navigate } from '../../routes/rootNavigation'
 import { setAppTheme } from '../../utils/storage'
 import { useDispatch } from 'react-redux'
 import { set_theme } from '../../actions/themeAction'
@@ -79,6 +79,9 @@ const note = ({ route }: noteProp) => {
 
     const set_reminder = () => {
         console.log('set reminder');
+        navigate('DateTimePicker', {
+            note_id: note.id
+        })
 
     }
 

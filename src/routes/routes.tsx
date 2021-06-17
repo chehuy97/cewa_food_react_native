@@ -7,6 +7,7 @@ import loginScreen from '../screens/authentication/login'
 import reminderScreen from '../screens/reminders'
 import settingScreen from '../screens/settings'
 import noteScreen from '../screens/note'
+import dateTimePickerScreen from '../screens/dateTimePicker'
 import helpScreen from '../screens/help'
 import registerScreen from '../screens/authentication/register'
 import { navigationRef } from './rootNavigation';
@@ -21,6 +22,10 @@ export type RootStackParamList = {
   Note: {
     note:INote
   },
+  DateTimePicker: {
+    note_id:string
+  },
+
   Reminders: undefined,
   Settings: undefined,
   Help: undefined,
@@ -61,6 +66,7 @@ const routes = () => {
         <Stack.Screen name="Login" component={loginScreen} />
         <Stack.Screen name="Drawer" component={drawer_navigator} />
         <Stack.Screen name="Register" component={registerScreen} />
+        <Stack.Screen name="DateTimePicker" component={dateTimePickerScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
