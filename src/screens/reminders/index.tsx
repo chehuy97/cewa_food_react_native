@@ -36,7 +36,7 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <AppHeader title="Reminder" />
+            <AppHeader title="Reminder" callback={() => {}}/>
             <View>
                 <FlatList
                     data={reminders}

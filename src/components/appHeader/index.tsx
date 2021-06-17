@@ -8,10 +8,11 @@ import { navigation } from '../../routes/rootNavigation'
 import { useSelector } from '../../reducers'
 
 interface appHeaderProps {
-    title:string
+    title:string,
+    callback: () => void
 }
 
-const appHeader = ({title}:appHeaderProps) => {
+const appHeader = ({title, callback }:appHeaderProps) => {
     const theme = useSelector(state => state.theme.themeColor)
 
     return (
@@ -27,7 +28,12 @@ const appHeader = ({title}:appHeaderProps) => {
                 color='#fff' 
                 size={25}/>}
                 centerComponent={{ text: title, style: { color: '#fff', fontSize: 20 } }}
-                rightComponent={{ icon: 'home', color: '#fff' }}
+                rightComponent={
+                    <Icon 
+                    onPress={() => { callback() }}
+                    name='search' 
+                    color='#fff' 
+                    size={25}/>}
             />
         </View>
     )
