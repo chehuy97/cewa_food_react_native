@@ -79,8 +79,17 @@ const note = ({ route }: noteProp) => {
 
     const set_reminder = () => {
         console.log('set reminder');
+        let aNote:INote = {
+            id: note.id,
+            title: title,
+            content:content,
+            account_id: note.account_id
+        }
+        
+        handle_save_note()
+
         navigate('DateTimePicker', {
-            note_id: note.id
+            note: aNote
         })
 
     }

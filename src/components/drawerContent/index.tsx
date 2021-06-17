@@ -6,7 +6,17 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useSelector } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { logout_request } from '../../actions/userAction'
-import { navigate } from '../../routes/rootNavigation'
+import { dispatch, navigate } from '../../routes/rootNavigation'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../routes/routes'
+import { StackActions } from '@react-navigation/routers'
+
+type drawerNavigationProps = StackNavigationProp<RootStackParamList, 'Drawer'>
+
+type drawerProps = {
+    navigation: drawerNavigationProps
+}
+
 const drawerContent = () => {
     const email = useSelector(state => state.user.auth.email)
     const username = email?.split('@')[0]
@@ -14,32 +24,33 @@ const drawerContent = () => {
     const theme = useSelector(state => state.theme.themeColor)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      () => true
-    );
+//     useEffect(() => {
+//     const backHandler = BackHandler.addEventListener(
+//       "hardwareBackPress",
+//       () => true
+//     );
 
-    return () => backHandler.remove();
-  }, []);
+//     return () => backHandler.remove();
+//   }, []);
 
-//   const backAction = () => {
-//     console.log("back btn did tapped");
 
-//     Alert.alert("Hold on!", "Are you sure you want to go back?", [
-//       {
-//         text: "Cancel",
-//         onPress: () => null,
-//         style: "cancel"
-//       },
-//       { text: "YES", onPress: () => BackHandler.exitApp() }
-//     ]);
-//     return true;
-//   };
+  const backAction = () => {
+    console.log("back btn did tapped");
+
+    Alert.alert("Hold on!", "Are you sure you want to signout? All reminders will be ignored.", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => signout() }
+    ]);
+    return true;
+  };
 
     const signout = () => {
-        navigate('Login')
-        dispatch(logout_request)
+        navigate('Drawer')
+        dispatch(logout_request())
     }
 
     return (
@@ -83,7 +94,7 @@ const drawerContent = () => {
                 <Drawer.Item
                     icon={({ color, size }) => <Icon name="log-out-outline" size={20} color={color} />}
                     label="Signout"
-                    onPress={() => { signout() }}
+                    onPress={() => { backAction() }}
                 />
             </Drawer.Section>
         </View>

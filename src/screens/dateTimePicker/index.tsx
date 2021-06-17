@@ -3,11 +3,12 @@ import { Platform, StyleSheet, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { goBack } from '../../routes/rootNavigation'
-import { useSelector } from '../../reducers'
+import { IReminder, useSelector } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { RouteProp } from '@react-navigation/core'
 import { RootStackParamList } from '../../routes/routes'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { add_reminder } from '../../actions/noteAction'
 
 type routeProps = RouteProp<RootStackParamList, 'DateTimePicker'>
 
@@ -19,7 +20,7 @@ type annroidMode = 'date' | 'time'
 
 const index = ({ route }: dateTimePickerProp) => {
 
-    const note_id = route.params.note_id
+    const note = route.params.note
     let defaultDate = new Date()
     const theme = useSelector(state => state.theme.themeColor)
     const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const index = ({ route }: dateTimePickerProp) => {
     const [day, setDay] = useState(defaultDate.getDate())
     const [year, setYear] = useState(defaultDate.getFullYear())
     const [hour, setHour] = useState(defaultDate.getHours()+1)
-    const [minute, setMinute] = useState("00")
+    const [minute, setMinute] = useState(0)
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [mode,setMode] = useState('date')
@@ -54,7 +55,7 @@ const index = ({ route }: dateTimePickerProp) => {
             setYear(date.getFullYear())
         } else {       
             setHour(date.getHours())
-            setMinute(date.getMinutes()+'')
+            setMinute(date.getMinutes())
         }
         
         hideDatePicker();
@@ -62,12 +63,26 @@ const index = ({ route }: dateTimePickerProp) => {
 
     const save_reminder = () => {
         console.log('save reminder');
-
+        let date = new Date(year, month, day, hour, minute)
+        let reminder:IReminder = {
+            note: note,
+            time: date
+        }
+        dispatch(add_reminder(reminder))
+        goBack()
     }
 
     const delete_reminder = () => {
         console.log('delete');
 
+    }
+
+    const displayMinute = ():string => {
+        if(minute< 10) {
+            return "0"+minute
+        } else {
+            return minute+""
+        }
     }
 
     const render_header = () => {
@@ -98,7 +113,7 @@ const index = ({ route }: dateTimePickerProp) => {
                     onPress={() => showTimePicker()}
                     style={styles.pickerContainer}>
                     <Text style={styles.pickeTitlerText}>Time</Text>
-                    <Text>{hour+":"+minute}</Text>
+                    <Text>{hour+":"+displayMinute()}</Text>
                 </TouchableOpacity>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}

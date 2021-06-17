@@ -9,7 +9,8 @@ export const noteActionTypes = {
     NOTE_EDIT_REQUEST: 'NOTE_EDIT_REQUEST',
     NOTE_EDIT_SUCCESS: 'NOTE_EDIT_SUCCESS',
     NOTE_REMOVE_REQUEST: 'NOTE_REMOVE_REQUEST',
-    NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS'
+    NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS',
+    NOTE_ADD_REMINDER: 'NOTE_ADD_REMINDER'
 }
 
 export interface INote {
@@ -17,6 +18,11 @@ export interface INote {
     title: string,
     content: string,
     account_id: string
+}
+
+export interface IReminder {
+    note:INote,
+    time:Date
 }
 
 export type noteList = {
@@ -27,10 +33,14 @@ export type noteDetail = {
     note: INote
 }
 
+export type reminderDetail = {
+    reminder:IReminder
+}
+
 export type notePayload = {
     notes: INote[],
     noteUpdate: INote,
-    noteReminders: INote[],
+    noteReminders: IReminder[],
     errorMessage: string
 }
 
@@ -45,7 +55,7 @@ export interface ActionError {
         message: string
     }
 }
-export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionError
+export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionSuccess<reminderDetail> | ActionError
 
 export const defaultState: notePayload = {
     notes: [],
@@ -66,7 +76,6 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
             state = { ...state, notes: action.payload.notes }
             return state
         case noteActionTypes.NOTE_EDIT_SUCCESS:
-            
             return state
         case noteActionTypes.NOTE_ADD_SUCCESS:
             return state
@@ -76,6 +85,11 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
             action = <ActionError>action
             state = { ...state, errorMessage: action.payload.message }
             ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);
+        case noteActionTypes.NOTE_ADD_REMINDER: {
+            action = <ActionSuccess<reminderDetail>>action
+            state.noteReminders.push(action.payload.reminder)
+            return state
+        }    
         default:
             return state
     }

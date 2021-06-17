@@ -4,10 +4,20 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
-import { reminders, IReminder } from '../../DummyData'
 import { navigate } from '../../routes/rootNavigation'
+import { IReminder, useSelector } from'../../reducers'
 
-const Home = () => {
+const index = () => {
+
+    const reminders = useSelector(state => state.note.noteReminders)
+
+    const displayMinute = (minute:number):string => {
+        if(minute< 10) {
+            return "0"+minute
+        } else {
+            return minute+""
+        }
+    }
 
     const render_note_item = (item: IReminder) => {
         return (
@@ -17,7 +27,7 @@ const Home = () => {
                 <View style={{ flexDirection: 'row', marginVertical: 10}}>
                     <TouchableOpacity style={styles.timeView}>
                         <Icon name='notifications-outline' size={18} color='black' />
-                        <Text style={{marginLeft:5}}>{item.time.toString()}</Text>
+                        <Text style={{marginLeft:5}}>{item.time.getDay()+'/'+item.time.getMonth()+'/'+item.time.getFullYear()+', '+item.time.getHours()+':'+displayMinute(item.time.getMinutes())}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -31,14 +41,14 @@ const Home = () => {
                 <FlatList
                     data={reminders}
                     renderItem={({ item }) => render_note_item(item)}
-                    keyExtractor={item => item.reminder_id}
+                    keyExtractor={item => item.note.id}
                 />
             </View>
         </View>
     )
 }
 
-export default Home
+export default index
 
 const styles = StyleSheet.create({
     container: {

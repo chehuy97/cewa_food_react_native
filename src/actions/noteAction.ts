@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { ErrorAction } from '../reducers'
-import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList, noteDetail } from '../reducers/noteReducer'
+import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList, noteDetail, IReminder, reminderDetail } from '../reducers/noteReducer'
 import { get_all_notes, add_new_note, edit_note, remove_note } from '../service/network'
 
 export const fetch_all_notes = (account_id: string, token:string): ThunkAction<Promise<void>, {}, {}, noteAction> => {
@@ -93,6 +93,15 @@ const note_failure = (msg:string):ErrorAction => {
         type: noteActionTypes.NOTE_FAILURE,
         payload: {
             message: msg
+        }
+    }
+}
+
+export const add_reminder = (reminder:IReminder): ActionSuccess<reminderDetail> => {
+    return {
+        type: noteActionTypes.NOTE_ADD_REMINDER,
+        payload: {
+            reminder: reminder
         }
     }
 }

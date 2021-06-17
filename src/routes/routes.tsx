@@ -23,7 +23,7 @@ export type RootStackParamList = {
     note:INote
   },
   DateTimePicker: {
-    note_id:string
+    note:INote
   },
 
   Reminders: undefined,

@@ -83,3 +83,15 @@ export const register_failure = (msg: string): ErrorAction => {
         }
     }
 }
+
+export const fetch_auth_request = (auth:userAuth):SuccessAction<userAuth> => {
+    return {
+        type: userActionTypes.FETCH_AUTH_REQUEST,
+        payload: {
+            id: auth.id,
+            email: auth.email,
+            accessToken: auth.accessToken,
+            refreshToken: auth.refreshToken
+        }
+    }
+}

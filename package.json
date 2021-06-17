@@ -26,6 +26,7 @@
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-modal-datetime-picker": "^10.0.0",
     "react-native-paper": "^4.9.1",
+    "react-native-push-notification": "^7.3.1",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.2.0",

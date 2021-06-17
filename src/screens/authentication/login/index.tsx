@@ -13,7 +13,7 @@ import { set_theme } from '../../../actions/themeAction'
 import { useSelector } from '../../../reducers'
 import { validateEmail } from '../../../utils/validation'
 import Spinner from 'react-native-loading-spinner-overlay'
-
+import { getAccoutEmail } from '../../../utils/storage'
 const Login = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
@@ -23,7 +23,16 @@ const Login = () => {
 
     useEffect(() => {
         set_theme_color()
+        ignore_login_if_need()
+
     })
+
+    const ignore_login_if_need = async () => {
+        let email = await getAccoutEmail()
+        if(email){
+            navigate_to_home()
+        }
+    }
 
     const set_theme_color = async () => {
         let color = await getAppTheme()
