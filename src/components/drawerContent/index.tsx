@@ -49,7 +49,7 @@ const drawerContent = () => {
   };
 
     const signout = () => {
-        navigate('Drawer')
+        navigate('Login')
         dispatch(logout_request())
     }
 

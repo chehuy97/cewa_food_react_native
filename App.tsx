@@ -12,12 +12,14 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './src/store'
 import { set_theme } from './src/actions/themeAction'
 import { getAppTheme } from './src/utils/storage'
+import { create_channel_notification } from './src/service/notification'
 
 
 const App = () => {
 
   useEffect(() => {
     console.disableYellowBox = true;
+    create_channel_notification()
   })
 
   return (
