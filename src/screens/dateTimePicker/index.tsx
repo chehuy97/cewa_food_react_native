@@ -64,7 +64,11 @@ const index = ({ route }: dateTimePickerProp) => {
     const save_reminder = () => {
         console.log('save reminder');
         let date = new Date(year, month, day, hour, minute)
+        let nowDate = new Date()
+        let id = nowDate.getDay()*100000000+nowDate.getMonth()*1000000+nowDate.getHours()*10000+nowDate.getMinutes()*100+nowDate.getSeconds()
+        console.log("ID reminder is "+id);      
         let reminder:IReminder = {
+            reminder_id:id,
             note: note,
             time: date
         }

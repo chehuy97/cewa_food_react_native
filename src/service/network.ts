@@ -3,16 +3,12 @@ import { INote, IUser, useSelector } from '../reducers'
 import { register_api, login_api, note_api } from '../utils/constants'
 import { userLoginWithEmail } from '../actions/userAction'
 
-
-//const access_token = useSelector(state => state.user.auth.accessToken)
-
 export type ResponeType<T> = {
   httpStatusCode: number,
   errorMessage: string,
   errorCode: string,
   data: T
 }
-
 
 export const login = (user: userLoginWithEmail): Promise<AxiosResponse<ResponeType<any>>> => {
   return axios({

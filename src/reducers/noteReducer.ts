@@ -21,6 +21,7 @@ export interface INote {
 }
 
 export interface IReminder {
+    reminder_id:number
     note:INote,
     time:Date
 }
