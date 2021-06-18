@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View, StyleSheet, Alert, BackHandler, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -6,10 +6,17 @@ import AppHeader from '../../components/appHeader'
 import colors from '../../utils/constants/colors'
 import { navigate } from '../../routes/rootNavigation'
 import { IReminder, useSelector } from'../../reducers'
+import { useIsFocused } from '@react-navigation/native'
 
 const index = () => {
 
-    const reminders = useSelector(state => state.note.noteReminders)
+    const reminders = useSelector(state => state.note.noteReminders) 
+    const isFocus = useIsFocused()
+
+    useEffect(() => {
+        console.log('triger reminder: '+reminders.length);
+        
+    },[isFocus])
 
     const displayMinute = (minute:number):string => {
         if(minute< 10) {
@@ -19,15 +26,27 @@ const index = () => {
         }
     }
 
-    const render_note_item = (item: IReminder) => {
+    const displayTime = (date:Date) => {
+        let monthDate = date.getMonth()+1
+        return monthDate+'/'+date.getDate()+'/'+date.getFullYear()+', '+date.getHours()+':'+displayMinute(date.getMinutes())
+    }
+
+    const render_note_item = (reminder: IReminder) => {
+        let d:Date | null = null
+        if (typeof(reminder.time) == 'string'){
+            d = new Date(reminder.time)
+            console.log('d is '+d);
+            
+        }
+        
         return (
             <View style={styles.noteView}>
-                <Text style={styles.textTitle}>{item.note.title}</Text>
-                <Text style={styles.textContent}>{item.note.content.split("\n")[0]}</Text>
+                <Text style={styles.textTitle}>{reminder.note.title}</Text>
+                <Text style={styles.textContent}>{reminder.note.content.split("\n")[0]}</Text>
                 <View style={{ flexDirection: 'row', marginVertical: 10}}>
                     <TouchableOpacity style={styles.timeView}>
                         <Icon name='notifications-outline' size={18} color='black' />
-                        <Text style={{marginLeft:5}}>{item.time.getDay()+'/'+item.time.getMonth()+'/'+item.time.getFullYear()+', '+item.time.getHours()+':'+displayMinute(item.time.getMinutes())}</Text>
+                        <Text style={{marginLeft:5}}>{d != null ? displayTime(d): displayTime(reminder.time)}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -41,8 +60,9 @@ const index = () => {
                 <FlatList
                     data={reminders}
                     renderItem={({ item }) => render_note_item(item)}
-                    keyExtractor={item => item.note.id}
+                    keyExtractor={item => item.reminder_id+''}
                 />
+                {/* {render_note_item(reminders[1])} */}
             </View>
         </View>
     )

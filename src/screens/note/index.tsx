@@ -77,7 +77,7 @@ const note = ({ route }: noteProp) => {
         goBack()
     }
 
-    const set_reminder = () => {
+    const set_reminder_time = () => {
         console.log('set reminder');
         let aNote:INote = {
             id: note.id,
@@ -114,7 +114,7 @@ const note = ({ route }: noteProp) => {
                     <TouchableOpacity onPress={() => { handle_remove_note() }} style={styles.iconTailStyle}>
                         <Icon name="trash-outline" size={25} color="gray" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { set_reminder() }} style={styles.iconTailStyle}>
+                    <TouchableOpacity onPress={() => { set_reminder_time() }} style={styles.iconTailStyle}>
                         <Icon name="notifications-outline" size={25} color="gray" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { handle_save_note() }} style={styles.iconTailStyle}>

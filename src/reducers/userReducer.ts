@@ -1,12 +1,4 @@
 import { Alert } from "react-native"
-import {
-    setAccessToken,
-    setAccountID,
-    setAccountEmail,
-    setRefreshToken,
-    removeAuthentication
-} from '../utils/storage'
-
 
 export const userActionTypes = {
     LOGIN_REQUEST: 'LOGIN_REQUEST',
@@ -16,7 +8,6 @@ export const userActionTypes = {
     REGISTER_REQUEST: 'REGISTER_REQUEST',
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
     REGISTER_FAILURE: 'REGISTER_FAILURE',
-    FETCH_AUTH_REQUEST: 'FETCH_AUTH_REQUEST'
 }
 
 export interface IUser {
@@ -94,13 +85,6 @@ export const defaultUserState: userPayload = {
 
 export type userAction = SuccessAction<userPayload> | SuccessAction<userAuth> | SuccessAction<string> | ErrorAction
 
-const setAuthentication = async (auth: userAuth) => {
-    await setAccessToken(auth.accessToken)
-    await setRefreshToken(auth.refreshToken)
-    await setAccountID(auth.id)
-    await setAccountEmail(auth.email)
-}
-
 const reducer = (state: userPayload = defaultUserState, action: userAction): userPayload => {
     switch (action.type) {
         case userActionTypes.LOGIN_REQUEST:
@@ -109,7 +93,6 @@ const reducer = (state: userPayload = defaultUserState, action: userAction): use
         case userActionTypes.LOGIN_SUCCESS:
             console.log("LOGIN SUCCESS CALLED");
             action = <SuccessAction<userAuth>>action
-            setAuthentication(action.payload)
             state = { ...state, auth: action.payload }
             return state
         case userActionTypes.LOGIN_FAILURE:
@@ -120,21 +103,15 @@ const reducer = (state: userPayload = defaultUserState, action: userAction): use
             return state
         case userActionTypes.LOGOUT_REQUEST:
             console.log("LOGOUT REQUEST CALLED");
-            removeAuthentication()
             return defaultUserState
-        case userActionTypes.REGISTER_SUCCESS: {
+        case userActionTypes.REGISTER_SUCCESS:
             action = <SuccessAction<string>>action
-            state = { ...state, message: action.payload }
-        }
+            state = { ...state, message: action.payload}
             return state
         case userActionTypes.REGISTER_FAILURE:
             action = <ErrorAction>action
             state = { ...state, message: action.payload.message }
             Alert.alert('Error', action.payload.message)
-            return state
-        case userActionTypes.FETCH_AUTH_REQUEST:
-            action = <SuccessAction<userAuth>>action
-            state.auth = action.payload
             return state    
         default:
             return state

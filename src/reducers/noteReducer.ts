@@ -1,4 +1,6 @@
 import { ToastAndroid } from "react-native"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistStore, persistReducer } from 'redux-persist'
 
 export const noteActionTypes = {
     NOTE_FAILURE: 'NOTE_FAILURE',
@@ -86,14 +88,20 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
             action = <ActionError>action
             state = { ...state, errorMessage: action.payload.message }
             ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);
-        case noteActionTypes.NOTE_ADD_REMINDER: {
+            return state
+        case noteActionTypes.NOTE_ADD_REMINDER:
             action = <ActionSuccess<reminderDetail>>action
             state.noteReminders.push(action.payload.reminder)
-            return state
-        }    
+            return state 
         default:
             return state
     }
 }
+
+// const notePersistConfig = {
+//     key:'note',
+//     storage:AsyncStorage,
+//     whitelist:['noteReminders']
+// }
 
 export default reducer

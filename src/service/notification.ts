@@ -57,7 +57,7 @@ export const localNotification = () => {
     vibration: 300,
     playSound: true,
     soundName: 'default',
-    actions: ["Yes", "No"]
+    // actions: ["Yes", "No"]
   })
 }
 
@@ -73,7 +73,7 @@ export const scheduledLocalNotification = (reminder:IReminder) => {
     vibration: 500,
     playSound: true,
     soundName: 'default',
-    actions: ["Yes", "No"],
+    // actions: ["Yes", "No"],
     date: reminder.time
   })
 }

@@ -98,6 +98,8 @@ const note_failure = (msg:string):ErrorAction => {
 }
 
 export const add_reminder = (reminder:IReminder): ActionSuccess<reminderDetail> => {
+    console.log('add reminder ok');
+    
     return {
         type: noteActionTypes.NOTE_ADD_REMINDER,
         payload: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, Button } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { goBack } from '../../routes/rootNavigation'
@@ -9,6 +9,7 @@ import { RouteProp } from '@react-navigation/core'
 import { RootStackParamList } from '../../routes/routes'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { add_reminder } from '../../actions/noteAction'
+import { scheduledLocalNotification } from '../../service/notification'
 
 type routeProps = RouteProp<RootStackParamList, 'DateTimePicker'>
 
@@ -24,7 +25,7 @@ const index = ({ route }: dateTimePickerProp) => {
     let defaultDate = new Date()
     const theme = useSelector(state => state.theme.themeColor)
     const dispatch = useDispatch()
-    const [month, setMonth] = useState(defaultDate.getMonth()+1)
+    const [month, setMonth] = useState(defaultDate.getMonth())
     const [day, setDay] = useState(defaultDate.getDate())
     const [year, setYear] = useState(defaultDate.getFullYear())
     const [hour, setHour] = useState(defaultDate.getHours()+1)
@@ -49,8 +50,7 @@ const index = ({ route }: dateTimePickerProp) => {
 
     const handleConfirm = (date: Date) => {
         if(mode == 'date') {
-            let realMonth = date.getMonth()+1
-            setMonth(realMonth)
+            setMonth(date.getMonth())
             setDay(date.getDate())
             setYear(date.getFullYear())
         } else {       
@@ -72,6 +72,7 @@ const index = ({ route }: dateTimePickerProp) => {
             note: note,
             time: date
         }
+        scheduledLocalNotification(reminder)
         dispatch(add_reminder(reminder))
         goBack()
     }
@@ -87,6 +88,10 @@ const index = ({ route }: dateTimePickerProp) => {
         } else {
             return minute+""
         }
+    }
+    
+    const displaymonth = () => {
+        return month + 1
     }
 
     const render_header = () => {
@@ -111,7 +116,7 @@ const index = ({ route }: dateTimePickerProp) => {
                     onPress={() => showDatePicker()}
                     style={styles.pickerContainer}>
                     <Text style={styles.pickeTitlerText}>Date</Text>
-                    <Text>{month+'/'+day+"/"+year}</Text>
+                    <Text>{displaymonth()+'/'+day+"/"+year}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => showTimePicker()}

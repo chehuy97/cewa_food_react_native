@@ -13,8 +13,9 @@ import { set_theme } from '../../../actions/themeAction'
 import { useSelector } from '../../../reducers'
 import { validateEmail } from '../../../utils/validation'
 import Spinner from 'react-native-loading-spinner-overlay'
-import { getAccoutEmail } from '../../../utils/storage'
 const Login = () => {
+    const auth = useSelector(state => state.user.auth)
+    const [localEmail, setLocalEmail] = useState('')
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,11 +26,11 @@ const Login = () => {
         set_theme_color()
         ignore_login_if_need()
 
-    })
+    },[localEmail])
 
     const ignore_login_if_need = async () => {
-        let email = await getAccoutEmail()
-        if(email){
+        setLocalEmail(auth.email)
+        if(localEmail != ''){
             navigate_to_home()
         }
     }
@@ -58,15 +59,6 @@ const Login = () => {
 
     const navigate_to_home = () => {
         navigate("Drawer")
-    }
-
-    const render_indicator = () => {
-        return (
-            <View style={styles.indicatorView}>
-                <ActivityIndicator />
-                <Text style={styles.indicatorText}>loading...</Text>
-            </View>
-        )
     }
 
     return (
