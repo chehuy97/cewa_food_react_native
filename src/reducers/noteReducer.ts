@@ -1,6 +1,6 @@
 import { ToastAndroid } from "react-native"
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { persistStore, persistReducer } from 'redux-persist'
+import { deleteNotification } from '../service/notification'
+import { SuccessAction } from "./userReducer"
 
 export const noteActionTypes = {
     NOTE_FAILURE: 'NOTE_FAILURE',
@@ -12,7 +12,11 @@ export const noteActionTypes = {
     NOTE_EDIT_SUCCESS: 'NOTE_EDIT_SUCCESS',
     NOTE_REMOVE_REQUEST: 'NOTE_REMOVE_REQUEST',
     NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS',
-    NOTE_ADD_REMINDER: 'NOTE_ADD_REMINDER'
+    ADD_REMINDER: 'NOTE_ADD_REMINDER',
+    REMOVE_APPEARED_REMINDER: 'NOTE_REMOVE_APPEARED_REMINDER',
+    REMOVE_REMINDER: 'REMOVE_REMINDER',
+    UPDATE_REMINDER: 'UPDATE_REMINDER',
+    NOTE_REMOVE_ALL: 'NOTE_REMOVE_ALL'
 }
 
 export interface INote {
@@ -40,6 +44,10 @@ export type reminderDetail = {
     reminder:IReminder
 }
 
+export type reminderList = {
+    reminders:IReminder[]
+}
+
 export type notePayload = {
     notes: INote[],
     noteUpdate: INote,
@@ -58,7 +66,9 @@ export interface ActionError {
         message: string
     }
 }
-export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | ActionSuccess<noteDetail> | ActionSuccess<string> | ActionSuccess<reminderDetail> | ActionError
+export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | 
+                        ActionSuccess<noteDetail> | ActionSuccess<string> | 
+                        ActionSuccess<reminderDetail> | ActionSuccess<reminderList> | ActionError
 
 export const defaultState: notePayload = {
     notes: [],
@@ -89,12 +99,36 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
             state = { ...state, errorMessage: action.payload.message }
             ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);
             return state
-        case noteActionTypes.NOTE_ADD_REMINDER:
+        case noteActionTypes.ADD_REMINDER:
             action = <ActionSuccess<reminderDetail>>action
             state.noteReminders.push(action.payload.reminder)
             return state 
-        default:
+        case noteActionTypes.REMOVE_APPEARED_REMINDER:
+            action = <ActionSuccess<reminderList>>action
+            state.noteReminders = action.payload.reminders
+            return state    
+        case noteActionTypes.UPDATE_REMINDER:
+            action = <ActionSuccess<reminderDetail>>action
+            let reminder = action.payload.reminder
+            state.noteReminders.forEach( item => {
+                if(item.reminder_id == reminder.reminder_id) {
+                    item.time = reminder.time
+                }
+            })
             return state
+        case noteActionTypes.REMOVE_REMINDER: 
+            action = <SuccessAction<reminderDetail>>action
+            let dReminder = action.payload.reminder
+            let index = state.noteReminders.findIndex(obj => obj.reminder_id == dReminder.reminder_id)
+            state.noteReminders.splice(index,1)
+            return state
+        case noteActionTypes.NOTE_REMOVE_ALL:
+            state.noteReminders.forEach( item => {
+                deleteNotification(item.reminder_id)
+            })
+            return defaultState
+        default:
+            return defaultState
     }
 }
 

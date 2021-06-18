@@ -7,14 +7,18 @@ import colors from '../../utils/constants/colors'
 import { navigate } from '../../routes/rootNavigation'
 import { IReminder, useSelector } from'../../reducers'
 import { useIsFocused } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { remove_appeared_reminder } from '../../actions/noteAction'
 
 const index = () => {
 
     const reminders = useSelector(state => state.note.noteReminders) 
     const isFocus = useIsFocused()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         console.log('triger reminder: '+reminders.length);
+        dispatch(remove_appeared_reminder(reminders))
         
     },[isFocus])
 
@@ -44,7 +48,11 @@ const index = () => {
                 <Text style={styles.textTitle}>{reminder.note.title}</Text>
                 <Text style={styles.textContent}>{reminder.note.content.split("\n")[0]}</Text>
                 <View style={{ flexDirection: 'row', marginVertical: 10}}>
-                    <TouchableOpacity style={styles.timeView}>
+                    <TouchableOpacity 
+                        onPress={() => navigate('DateTimePicker',{
+                            reminder: reminder
+                        })}
+                        style={styles.timeView}>
                         <Icon name='notifications-outline' size={18} color='black' />
                         <Text style={{marginLeft:5}}>{d != null ? displayTime(d): displayTime(reminder.time)}</Text>
                     </TouchableOpacity>

@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux'
 import { RouteProp } from '@react-navigation/core'
 import { RootStackParamList } from '../../routes/routes'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { add_reminder } from '../../actions/noteAction'
-import { scheduledLocalNotification } from '../../service/notification'
+import { add_reminder, update_reminder, remove_reminder } from '../../actions/noteAction'
+import { scheduledLocalNotification, updateNotification, deleteNotification } from '../../service/notification'
 
 type routeProps = RouteProp<RootStackParamList, 'DateTimePicker'>
 
@@ -22,17 +22,18 @@ type annroidMode = 'date' | 'time'
 const index = ({ route }: dateTimePickerProp) => {
 
     const note = route.params.note
+    const reminder = route.params.reminder
     let defaultDate = new Date()
     const theme = useSelector(state => state.theme.themeColor)
     const dispatch = useDispatch()
     const [month, setMonth] = useState(defaultDate.getMonth())
     const [day, setDay] = useState(defaultDate.getDate())
     const [year, setYear] = useState(defaultDate.getFullYear())
-    const [hour, setHour] = useState(defaultDate.getHours()+1)
+    const [hour, setHour] = useState(defaultDate.getHours() + 1)
     const [minute, setMinute] = useState(0)
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [mode,setMode] = useState('date')
+    const [mode, setMode] = useState('date')
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -49,47 +50,64 @@ const index = ({ route }: dateTimePickerProp) => {
     };
 
     const handleConfirm = (date: Date) => {
-        if(mode == 'date') {
+        if (mode == 'date') {
             setMonth(date.getMonth())
             setDay(date.getDate())
             setYear(date.getFullYear())
-        } else {       
+        } else {
             setHour(date.getHours())
             setMinute(date.getMinutes())
         }
-        
+
         hideDatePicker();
     };
 
     const save_reminder = () => {
         console.log('save reminder');
         let date = new Date(year, month, day, hour, minute)
-        let nowDate = new Date()
-        let id = nowDate.getDay()*100000000+nowDate.getMonth()*1000000+nowDate.getHours()*10000+nowDate.getMinutes()*100+nowDate.getSeconds()
-        console.log("ID reminder is "+id);      
-        let reminder:IReminder = {
-            reminder_id:id,
-            note: note,
-            time: date
+        if (note != null) {
+            let nowDate = new Date()
+            let id = nowDate.getDay() * 100000000 + nowDate.getMonth() * 1000000 + nowDate.getHours() * 10000 + nowDate.getMinutes() * 100 + nowDate.getSeconds()
+            console.log("ID reminder is " + id);
+            let reminder: IReminder = {
+                reminder_id: id,
+                note: note,
+                time: date
+            }
+            dispatch(add_reminder(reminder))
+            scheduledLocalNotification(reminder)
+            goBack()
+        } else {
+            let aReminder: IReminder = {
+                reminder_id: reminder.reminder_id,
+                note: reminder.note,
+                time: date
+            }
+            dispatch(update_reminder(aReminder))
+            updateNotification(aReminder)
+            goBack()
+
         }
-        scheduledLocalNotification(reminder)
-        dispatch(add_reminder(reminder))
-        goBack()
     }
 
     const delete_reminder = () => {
         console.log('delete');
-
+        if (reminder != null ) {
+            //delete
+            deleteNotification(reminder.reminder_id)
+            dispatch(remove_reminder(reminder))
+        }      
+        goBack()
     }
 
-    const displayMinute = ():string => {
-        if(minute< 10) {
-            return "0"+minute
+    const displayMinute = (): string => {
+        if (minute < 10) {
+            return "0" + minute
         } else {
-            return minute+""
+            return minute + ""
         }
     }
-    
+
     const displaymonth = () => {
         return month + 1
     }
@@ -116,13 +134,13 @@ const index = ({ route }: dateTimePickerProp) => {
                     onPress={() => showDatePicker()}
                     style={styles.pickerContainer}>
                     <Text style={styles.pickeTitlerText}>Date</Text>
-                    <Text>{displaymonth()+'/'+day+"/"+year}</Text>
+                    <Text>{displaymonth() + '/' + day + "/" + year}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => showTimePicker()}
                     style={styles.pickerContainer}>
                     <Text style={styles.pickeTitlerText}>Time</Text>
-                    <Text>{hour+":"+displayMinute()}</Text>
+                    <Text>{hour + ":" + displayMinute()}</Text>
                 </TouchableOpacity>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}

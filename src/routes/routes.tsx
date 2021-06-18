@@ -13,7 +13,7 @@ import registerScreen from '../screens/authentication/register'
 import { navigationRef } from './rootNavigation';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import DrawerContent from '../components/drawerContent'
-import { INote } from '../reducers'
+import { INote, IReminder } from '../reducers'
 
 export type RootStackParamList = {
   Login: undefined
@@ -23,7 +23,8 @@ export type RootStackParamList = {
     note:INote
   },
   DateTimePicker: {
-    note:INote
+    note:INote,
+    reminder:IReminder
   },
 
   Reminders: undefined,

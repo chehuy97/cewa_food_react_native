@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useSelector } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { logout_request } from '../../actions/userAction'
-import { dispatch, navigate } from '../../routes/rootNavigation'
+import { remove_all_notes } from'../../actions/noteAction'
+import { navigate } from '../../routes/rootNavigation'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../routes/routes'
 import { StackActions } from '@react-navigation/routers'
@@ -51,6 +52,7 @@ const drawerContent = () => {
     const signout = () => {
         navigate('Login')
         dispatch(logout_request())
+        dispatch(remove_all_notes())
     }
 
     return (

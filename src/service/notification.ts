@@ -64,6 +64,7 @@ export const localNotification = () => {
 export const scheduledLocalNotification = (reminder:IReminder) => {
   
   PushNotification.localNotificationSchedule({
+    id:reminder.reminder_id,
     autoCancel: true,
     bigText: reminder.note.content,
     subText: 'todo app',
@@ -76,6 +77,15 @@ export const scheduledLocalNotification = (reminder:IReminder) => {
     // actions: ["Yes", "No"],
     date: reminder.time
   })
+}
+
+export const deleteNotification = (id:number) => {
+  PushNotification.cancelLocalNotifications({id: id+''})
+}
+
+export const updateNotification = (reminder:IReminder) => {
+  PushNotification.cancelLocalNotifications({id: reminder.reminder_id+''})
+  scheduledLocalNotification(reminder)
 }
 
 export const create_channel_notification = () => {
