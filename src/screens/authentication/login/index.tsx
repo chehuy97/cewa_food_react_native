@@ -20,7 +20,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const theme = useSelector(state => state.theme.themeColor)
+    const theme =colors.app_color
 
     useEffect(() => {
         set_theme_color()

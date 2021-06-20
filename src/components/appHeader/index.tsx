@@ -6,6 +6,7 @@ import { Header } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { navigation } from '../../routes/rootNavigation'
 import { useSelector } from '../../reducers'
+import colors from '../../utils/constants/colors'
 
 interface appHeaderProps {
     title:string,
@@ -13,7 +14,7 @@ interface appHeaderProps {
 }
 
 const appHeader = ({title, callback }:appHeaderProps) => {
-    const theme = useSelector(state => state.theme.themeColor)
+    const theme = colors.app_color
 
     return (
         <View>

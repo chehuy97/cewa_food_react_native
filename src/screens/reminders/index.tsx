@@ -44,7 +44,7 @@ const index = () => {
         }
         
         return (
-            <View style={styles.noteView}>
+            <View style={[styles.noteView, {backgroundColor: reminder.note.color}]}>
                 <Text style={styles.textTitle}>{reminder.note.title}</Text>
                 <Text style={styles.textContent}>{reminder.note.content.split("\n")[0]}</Text>
                 <View style={{ flexDirection: 'row', marginVertical: 10}}>

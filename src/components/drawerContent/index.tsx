@@ -11,6 +11,7 @@ import { navigate } from '../../routes/rootNavigation'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../routes/routes'
 import { StackActions } from '@react-navigation/routers'
+import colors from '../../utils/constants/colors'
 
 type drawerNavigationProps = StackNavigationProp<RootStackParamList, 'Drawer'>
 
@@ -22,7 +23,7 @@ const drawerContent = () => {
     const email = useSelector(state => state.user.auth.email)
     const username = email?.split('@')[0]
     const firstLetter = username?.charAt(0).toUpperCase()
-    const theme = useSelector(state => state.theme.themeColor)
+    const theme = colors.app_color
     const dispatch = useDispatch()
 
 //     useEffect(() => {

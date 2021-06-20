@@ -1,6 +1,6 @@
 export default {
     bg_page:'#EEEEEE',
-    app_color: "#1e89dc",
+    app_color: "#1f89dc",
     //theme
     gray_theme: '#cbcbcb',
     yellow_theme: '#fff380',

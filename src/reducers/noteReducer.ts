@@ -1,5 +1,6 @@
 import { ToastAndroid } from "react-native"
 import { deleteNotification } from '../service/notification'
+import colors from "../utils/constants/colors"
 import { SuccessAction } from "./userReducer"
 
 export const noteActionTypes = {
@@ -23,6 +24,7 @@ export interface INote {
     id: string,
     title: string,
     content: string,
+    color:string,
     account_id: string
 }
 
@@ -76,6 +78,7 @@ export const defaultState: notePayload = {
         id: '',
         title: '',
         content: '',
+        color: colors.yellow_theme,
         account_id: ''
     },
     noteReminders: [],

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Platform, StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { goBack } from '../../routes/rootNavigation'
@@ -10,6 +10,7 @@ import { RootStackParamList } from '../../routes/routes'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { add_reminder, update_reminder, remove_reminder } from '../../actions/noteAction'
 import { scheduledLocalNotification, updateNotification, deleteNotification } from '../../service/notification'
+import colors from '../../utils/constants/colors'
 
 type routeProps = RouteProp<RootStackParamList, 'DateTimePicker'>
 
@@ -24,14 +25,12 @@ const index = ({ route }: dateTimePickerProp) => {
     const note = route.params.note
     const reminder = route.params.reminder
     let defaultDate = new Date()
-    const theme = useSelector(state => state.theme.themeColor)
     const dispatch = useDispatch()
     const [month, setMonth] = useState(defaultDate.getMonth())
     const [day, setDay] = useState(defaultDate.getDate())
     const [year, setYear] = useState(defaultDate.getFullYear())
     const [hour, setHour] = useState(defaultDate.getHours() + 1)
     const [minute, setMinute] = useState(0)
-
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [mode, setMode] = useState('date')
 
@@ -114,7 +113,7 @@ const index = ({ route }: dateTimePickerProp) => {
 
     const render_header = () => {
         return (
-            <View style={[styles.headerContainer, { backgroundColor: theme }]}>
+            <View style={styles.headerContainer}>
                 <TouchableOpacity onPress={() => goBack()}>
                     <Icon name='close' size={25} color='black' />
                 </TouchableOpacity>
@@ -170,6 +169,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        backgroundColor: colors.app_color,
         paddingHorizontal: 10,
         height: 60,
         marginBottom: 10

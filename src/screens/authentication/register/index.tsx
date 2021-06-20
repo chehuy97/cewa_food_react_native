@@ -9,9 +9,10 @@ import { validateEmail, validatePassword, validateBirthday } from '../../../util
 import { useDispatch } from 'react-redux'
 import { register_request } from '../../../actions/userAction'
 import Spinner from 'react-native-loading-spinner-overlay'
+import colors from '../../../utils/constants/colors'
 
 const index = () => {
-    const theme = useSelector(state => state.theme.themeColor)
+    const theme = colors.app_color
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')

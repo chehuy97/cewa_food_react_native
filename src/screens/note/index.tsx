@@ -22,18 +22,20 @@ const note = ({ route }: noteProp) => {
 
     const dispatch = useDispatch()
     const note: INote = route.params.note
-    const theme = useSelector(state => state.theme.themeColor)
+    const [theme, setTheme] = useState(note.color)
     const auth = useSelector(state => state.user.auth)
     const [title, setTitle] = useState(note.title)
     const [content, setContent] = useState(note.content)
 
-    const set_theme_color = async (color: string) => {
-        await setAppTheme(color)
-        dispatch(set_theme(color))
+
+
+    const set_theme_color = (color: string) => {
+        setTheme(color)
+        
     }
 
     const backAction = () => {
-        if (title != note.title || content != note.content) {
+        if (title != note.title || content != note.content || theme != note.color) {
             Alert.alert("Alert", "It can be not save.Are you sure you want to go back?", [
                 {
                     text: "Cancel",
@@ -48,13 +50,14 @@ const note = ({ route }: noteProp) => {
     };
 
     const handle_save_note = async () => {
-        if (title == note.title && content == note.content) {
+        if (title == note.title && content == note.content && theme == note.color) {
             goBack()
         } else {
             let aNote:INote ={ 
                 id:note.id,
                 title:title,
                 content:content,
+                color: theme,
                 account_id:auth.id
             }
             if(note.title == '' && note.content == ''){
@@ -83,6 +86,7 @@ const note = ({ route }: noteProp) => {
             id: note.id,
             title: title,
             content:content,
+            color: theme,
             account_id: note.account_id
         }
         

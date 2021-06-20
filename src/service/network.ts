@@ -65,6 +65,7 @@ export const add_new_note = (note:INote, token:string): Promise<AxiosResponse<Re
     data:{
       title: note.title,
       content: note.content,
+      color: note.color,
       account_id: note.account_id
     }
   })
@@ -83,6 +84,7 @@ export const edit_note = (note:INote, token:string): Promise<AxiosResponse<Respo
       id: note.id,
       title: note.title,
       content: note.content,
+      color: note.color,
       account_id: note.account_id
     }
   })

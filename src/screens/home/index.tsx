@@ -15,7 +15,7 @@ const Home = () => {
   const auth = useSelector(state => state.user.auth)
   const notes = useSelector(state => state.note.notes)
   var defaultNotes:INote[] = []
-  const theme = useSelector(state => state.theme.themeColor)
+  const theme = colors.app_color
   const dispatch = useDispatch()
   const isFocus = useIsFocused()
   const [search, setSearch] = useState('')
@@ -42,7 +42,7 @@ const Home = () => {
 
   const render_note_item = (item: INote) => {
     return (
-      <TouchableOpacity style={[styles.noteView, {backgroundColor:theme}]} onPress={() => navigate('Note', {
+      <TouchableOpacity style={[styles.noteView, {backgroundColor:item.color}]} onPress={() => navigate('Note', {
         note: item
       })}>
         <Text style={styles.textTitle}>{item.title}</Text>
@@ -73,6 +73,7 @@ const Home = () => {
             id: '',
             title: '',
             content: '',
+            color: colors.yellow_theme,
             account_id: ''
           }
         })}>
