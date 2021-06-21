@@ -53,7 +53,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="Home" callback={show_search} />
+      <AppHeader title="Home" rightIcon='search' callback={show_search} />
       <View>
         {showSearch ? <SearchBar
           platform='android'

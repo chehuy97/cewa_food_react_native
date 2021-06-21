@@ -10,10 +10,11 @@ import colors from '../../utils/constants/colors'
 
 interface appHeaderProps {
     title:string,
+    rightIcon: string
     callback: () => void
 }
 
-const appHeader = ({title, callback }:appHeaderProps) => {
+const appHeader = ({title, rightIcon, callback }:appHeaderProps) => {
     const theme = colors.app_color
 
     return (
@@ -32,7 +33,7 @@ const appHeader = ({title, callback }:appHeaderProps) => {
                 rightComponent={
                     <Icon 
                     onPress={() => { callback() }}
-                    name='search' 
+                    name={rightIcon}
                     color='#fff' 
                     size={25}/>}
             />

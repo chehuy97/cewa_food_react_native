@@ -26,15 +26,6 @@ const drawerContent = () => {
     const theme = colors.app_color
     const dispatch = useDispatch()
 
-//     useEffect(() => {
-//     const backHandler = BackHandler.addEventListener(
-//       "hardwareBackPress",
-//       () => true
-//     );
-
-//     return () => backHandler.remove();
-//   }, []);
-
 
   const backAction = () => {
     console.log("back btn did tapped");

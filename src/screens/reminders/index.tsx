@@ -9,6 +9,7 @@ import { IReminder, useSelector } from'../../reducers'
 import { useIsFocused } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { remove_appeared_reminder } from '../../actions/noteAction'
+import { readFile } from '../../service/fileExecution'
 
 const index = () => {
 
@@ -33,6 +34,12 @@ const index = () => {
     const displayTime = (date:Date) => {
         let monthDate = date.getMonth()+1
         return monthDate+'/'+date.getDate()+'/'+date.getFullYear()+', '+date.getHours()+':'+displayMinute(date.getMinutes())
+    }
+
+    const open_local_folder = () => {
+        console.log('local folder');
+        
+        readFile()
     }
 
     const render_note_item = (reminder: IReminder) => {
@@ -63,7 +70,7 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <AppHeader title="Reminder" callback={() => {}}/>
+            <AppHeader title="Reminder" rightIcon='folder' callback={open_local_folder}/>
             <View>
                 <FlatList
                     data={reminders}
