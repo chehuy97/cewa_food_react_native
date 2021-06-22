@@ -5,7 +5,7 @@ import AppHeader from '../../components/appHeader'
 const helps = () => {
     return (
         <View>
-            <AppHeader title="Help" rightIcon='settings' callback={() => {}}/>
+            <AppHeader title="Help" rightIcon='settings'callbackItemOne={() => {}} callbackItemTwo={() => {}}/>
             <Text>Helps</Text>
         </View>
     )

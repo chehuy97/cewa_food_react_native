@@ -2,6 +2,7 @@ import { ToastAndroid } from "react-native"
 import { deleteNotification } from '../service/notification'
 import colors from "../utils/constants/colors"
 import { SuccessAction } from "./userReducer"
+import{ scheduledLocalNotification }  from '../service/notification'
 
 export const noteActionTypes = {
     NOTE_FAILURE: 'NOTE_FAILURE',

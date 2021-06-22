@@ -12,6 +12,7 @@ import { set_theme } from '../../actions/themeAction'
 import { edit_one_note, add_note, remove_one_note } from '../../actions/noteAction'
 
 
+
 type noteRouteProp = RouteProp<RootStackParamList, 'Note'>
 
 type noteProp = {

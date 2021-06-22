@@ -136,7 +136,6 @@ export const update_reminder = (reminder:IReminder):ActionSuccess<reminderDetail
     }
 }
 
-
 export const remove_all_notes = ():ActionSuccess<string> => {
     return {
         type: noteActionTypes.NOTE_REMOVE_ALL,

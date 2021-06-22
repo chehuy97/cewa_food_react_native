@@ -1,7 +1,7 @@
 import RNFS from 'react-native-fs'
 
-export const readFile = () => {
-    RNFS.readDir(RNFS.DocumentDirectoryPath) 
+export const readFile = (uri:string) => {
+    RNFS.readDir(uri) 
         .then((result) => {
             console.log('GOT RESULT', result);
 

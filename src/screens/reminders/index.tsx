@@ -10,6 +10,8 @@ import { useIsFocused } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { remove_appeared_reminder } from '../../actions/noteAction'
 import { readFile } from '../../service/fileExecution'
+// import DocumentPicker from 'react-native-document-picker'
+// import RNFS from 'react-native-fs'
 
 const index = () => {
 
@@ -34,12 +36,6 @@ const index = () => {
     const displayTime = (date:Date) => {
         let monthDate = date.getMonth()+1
         return monthDate+'/'+date.getDate()+'/'+date.getFullYear()+', '+date.getHours()+':'+displayMinute(date.getMinutes())
-    }
-
-    const open_local_folder = () => {
-        console.log('local folder');
-        
-        readFile()
     }
 
     const render_note_item = (reminder: IReminder) => {
@@ -70,14 +66,13 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <AppHeader title="Reminder" rightIcon='folder' callback={open_local_folder}/>
+            <AppHeader title="Reminder" rightIcon='settings' callbackItemOne={() => {}} callbackItemTwo={() => {}}/>
             <View>
                 <FlatList
                     data={reminders}
                     renderItem={({ item }) => render_note_item(item)}
                     keyExtractor={item => item.reminder_id+''}
                 />
-                {/* {render_note_item(reminders[1])} */}
             </View>
         </View>
     )
