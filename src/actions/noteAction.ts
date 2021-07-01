@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { ErrorAction } from '../reducers'
-import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList, noteDetail, IReminder, reminderDetail, reminderList } from '../reducers/noteReducer'
+import { noteActionTypes, ActionSuccess, ActionError, notePayload, INote, noteAction, noteList, noteDetail} from '../reducers/noteReducer'
 import { get_all_notes, add_new_note, edit_note, remove_note } from '../service/network'
 
 export const fetch_all_notes = (account_id: string, token:string): ThunkAction<Promise<void>, {}, {}, noteAction> => {
@@ -97,48 +97,46 @@ const note_failure = (msg:string):ErrorAction => {
     }
 }
 
-export const add_reminder = (reminder:IReminder): ActionSuccess<reminderDetail> => {
-    console.log('add reminder ok');
-    
-    return {
-        type: noteActionTypes.ADD_REMINDER,
-        payload: {
-            reminder: reminder
-        }
-    }
-}
+// export const add_reminder = (reminder:IReminder): ActionSuccess<reminderDetail> => { 
+//     return {
+//         type: noteActionTypes.ADD_REMINDER,
+//         payload: {
+//             reminder: reminder
+//         }
+//     }
+// }
 
-export const remove_appeared_reminder = (reminders:IReminder[]):ActionSuccess<reminderList> => {
-    let now = new Date()
-    let newReminders = reminders.filter(r => new Date(r.time).getTime() > now.getTime())
-    return {
-        type: noteActionTypes.REMOVE_APPEARED_REMINDER,
-        payload: {
-            reminders:newReminders
-        }
-    }
-}
+// export const remove_appeared_reminder = (reminders:IReminder[]):ActionSuccess<reminderList> => {
+//     let now = new Date()
+//     let newReminders = reminders.filter(r => new Date(r.time).getTime() >= now.getTime())
+//     return {
+//         type: noteActionTypes.REMOVE_APPEARED_REMINDER,
+//         payload: {
+//             reminders:newReminders
+//         }
+//     }
+// }
 
-export const remove_reminder = (reminder:IReminder):ActionSuccess<reminderDetail> => {
-        return {
-            type: noteActionTypes.REMOVE_REMINDER,
-            payload: {
-                reminder: reminder
-            }
-        }
-}
-export const update_reminder = (reminder:IReminder):ActionSuccess<reminderDetail> => {
-    return {
-        type: noteActionTypes.UPDATE_REMINDER,
-        payload: {
-            reminder: reminder
-        }
-    }
-}
+// export const remove_reminder = (reminder:IReminder):ActionSuccess<reminderDetail> => {
+//         return {
+//             type: noteActionTypes.REMOVE_REMINDER,
+//             payload: {
+//                 reminder: reminder
+//             }
+//         }
+// }
+// export const update_reminder = (reminder:IReminder):ActionSuccess<reminderDetail> => {
+//     return {
+//         type: noteActionTypes.UPDATE_REMINDER,
+//         payload: {
+//             reminder: reminder
+//         }
+//     }
+// }
 
-export const remove_all_notes = ():ActionSuccess<string> => {
-    return {
-        type: noteActionTypes.NOTE_REMOVE_ALL,
-        payload: 'remove all'
-    }
-}
+// export const remove_all_notes = ():ActionSuccess<string> => {
+//     return {
+//         type: noteActionTypes.NOTE_REMOVE_ALL,
+//         payload: 'remove all'
+//     }
+// }

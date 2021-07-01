@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, Platform, Button } from 'react-native'
 import { RootStackParamList } from '../../routes/routes'
 import colors from '../../utils/constants/colors'
-import { useSelector, INote } from '../../reducers'
+import { useSelector, INote, IReminder } from '../../reducers'
 import { goBack, navigate } from '../../routes/rootNavigation'
 import { setAppTheme } from '../../utils/storage'
 import { useDispatch } from 'react-redux'
 import { set_theme } from '../../actions/themeAction'
-import { edit_one_note, add_note, remove_one_note } from '../../actions/noteAction'
+import { edit_one_note, add_note, remove_one_note, update_reminder } from '../../actions'
 
 
 
@@ -22,7 +22,8 @@ type noteProp = {
 const note = ({ route }: noteProp) => {
 
     const dispatch = useDispatch()
-    const note: INote = route.params.note
+    const note: INote = route.params.note == null ? route.params.reminder.note : route.params.note
+    const reminder: IReminder = route.params.reminder
     const [theme, setTheme] = useState(note.color)
     const auth = useSelector(state => state.user.auth)
     const [title, setTitle] = useState(note.title)
@@ -32,7 +33,6 @@ const note = ({ route }: noteProp) => {
 
     const set_theme_color = (color: string) => {
         setTheme(color)
-        
     }
 
     const backAction = () => {
@@ -50,9 +50,11 @@ const note = ({ route }: noteProp) => {
         }
     };
 
-    const handle_save_note = async () => {
+    const handle_save_note = async (is_set_reminder = false) => {
         if (title == note.title && content == note.content && theme == note.color) {
-            goBack()
+            if(is_set_reminder == false){
+                goBack()
+            }
         } else {
             let aNote:INote ={ 
                 id:note.id,
@@ -63,15 +65,25 @@ const note = ({ route }: noteProp) => {
             }
             if(note.title == '' && note.content == ''){
                 //add new note
-                console.log('add note');
-                await dispatch(add_note(aNote,auth.accessToken))
-                goBack()
+                if(reminder == null){
+                    await dispatch(add_note(aNote,auth.accessToken))
+                    goBack()
+                } else {
+                    set_reminder_time()
+                }
             } else {
                 //edit note
-                console.log('edit note');
-                await dispatch(edit_one_note(aNote, auth.accessToken))
+                if(reminder == null){
+                    await dispatch(edit_one_note(aNote, auth.accessToken)) 
+                } else {
+                    let aReminder:IReminder = {
+                        reminder_id: reminder.reminder_id,
+                        note: aNote,
+                        time: reminder.time
+                    }
+                    dispatch(update_reminder(aReminder))
+                }
                 goBack()
-                
             }
         }
     }
@@ -82,7 +94,6 @@ const note = ({ route }: noteProp) => {
     }
 
     const set_reminder_time = () => {
-        console.log('set reminder');
         let aNote:INote = {
             id: note.id,
             title: title,
@@ -91,7 +102,9 @@ const note = ({ route }: noteProp) => {
             account_id: note.account_id
         }
         
-        handle_save_note()
+        if(reminder == null){
+            handle_save_note(true)
+        }
 
         navigate('DateTimePicker', {
             note: aNote
@@ -116,12 +129,12 @@ const note = ({ route }: noteProp) => {
                     <Icon name="chevron-back-outline" size={25} color="gray" />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => { handle_remove_note() }} style={styles.iconTailStyle}>
+                    {reminder == null ? <TouchableOpacity onPress={() => { handle_remove_note() }} style={styles.iconTailStyle}>
                         <Icon name="trash-outline" size={25} color="gray" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { set_reminder_time() }} style={styles.iconTailStyle}>
+                    </TouchableOpacity> : null}
+                    {reminder == null ? <TouchableOpacity onPress={() => { set_reminder_time() }} style={styles.iconTailStyle}>
                         <Icon name="notifications-outline" size={25} color="gray" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> : null}
                     <TouchableOpacity onPress={() => { handle_save_note() }} style={styles.iconTailStyle}>
                         <Icon name="download-outline" size={25} color="gray" />
                     </TouchableOpacity>

@@ -20,7 +20,8 @@ export type RootStackParamList = {
   Drawer: undefined,
   Home: undefined,
   Note: {
-    note:INote
+    note:INote,
+    reminder: IReminder
   },
   DateTimePicker: {
     note:INote,
@@ -33,24 +34,20 @@ export type RootStackParamList = {
   Register: undefined
 }
 
+// export enum noteType {
+//   note = 'note',
+//   reminder = 'reminder'
+// }
+
 const Stack = createStackNavigator<RootStackParamList>()
 const Drawer = createDrawerNavigator();
 
 const routes = () => {
 
-  const home_navigator = () => {
-    return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-           <Stack.Screen name="Home" component={homeScreen} />
-           <Stack.Screen name="Note" component={noteScreen} />
-      </Stack.Navigator>
-    )
-  }
-
   const drawer_navigator = () => {
     return (
       <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent />}>
-        <Drawer.Screen name="HomeNav" component={home_navigator} />
+        <Drawer.Screen name="HomeNav" component={homeScreen} />
         <Drawer.Screen name="Reminders" component={reminderScreen} />
         <Drawer.Screen name="Settings" component={settingScreen} />
         <Drawer.Screen name="Help" component={helpScreen} />
@@ -67,6 +64,7 @@ const routes = () => {
         <Stack.Screen name="Login" component={loginScreen} />
         <Stack.Screen name="Drawer" component={drawer_navigator} />
         <Stack.Screen name="Register" component={registerScreen} />
+        <Stack.Screen name="Note" component={noteScreen} />
         <Stack.Screen name="DateTimePicker" component={dateTimePickerScreen}/>
       </Stack.Navigator>
     </NavigationContainer>

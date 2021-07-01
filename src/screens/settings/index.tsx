@@ -5,7 +5,7 @@ import AppHeader from '../../components/appHeader'
 const settings = () => {
     return (
         <View>
-            <AppHeader title="Settings" rightIcon='settings' callbackItemOne={() => {}} callbackItemTwo={() => {}}/>
+            <AppHeader title="Settings" rightIcon='settings' callback={() => {}}/>
             <Text>Settings</Text>
         </View>
     )

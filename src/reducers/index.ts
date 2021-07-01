@@ -11,20 +11,21 @@ import { Reducer } from 'react'
 
 export * from './userReducer'
 export * from './noteReducer'
+export * from './reminderReducer'
 
 export type AppState = {
     user: userPayload,
+    reminder: reminderPayload,
     theme: themePayload,
     note: notePayload,
-    reminder: reminderPayload
 }
 
 
 const rootReducer = combineReducers<AppState>({
     user: userReducer,
+    reminder: reminderReducer,
     theme: themeReducer,
     note: noteReducer,
-    reminder: reminderReducer
 })
 
 export const useSelector:TypedUseSelectorHook<ReturnType<typeof rootReducer>> = useReduxSelector

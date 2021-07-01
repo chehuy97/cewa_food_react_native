@@ -11,11 +11,10 @@ import colors from '../../utils/constants/colors'
 interface appHeaderProps {
     title: string,
     rightIcon: string,
-    callbackItemOne: () => void,
-    callbackItemTwo: () => void
+    callback: () => void
 }
 
-const appHeader = ({ title, rightIcon, callbackItemOne, callbackItemTwo }: appHeaderProps) => {
+const appHeader = ({ title, rightIcon, callback }: appHeaderProps) => {
     const theme = colors.app_color
 
     return (
@@ -32,19 +31,11 @@ const appHeader = ({ title, rightIcon, callbackItemOne, callbackItemTwo }: appHe
                         size={25} />}
                 centerComponent={{ text: title, style: { color: '#fff', fontSize: 20 } }}
                 rightComponent={
-                    <View style={{flexDirection:'row'}}>
-                        {rightIcon == 'search' ? <Icon
-                        style={{marginRight:10}}
-                            onPress={() => { callbackItemOne() }}
-                            name='folder'
-                            color='#fff'
-                            size={25} /> : null}
-                        <Icon
-                            onPress={() => { callbackItemTwo() }}
-                            name={rightIcon}
-                            color='#fff'
-                            size={25} />
-                    </View>
+                    <Icon
+                        onPress={() => callback()}
+                        name={rightIcon}
+                        color='#fff'
+                        size={25} />
                 }
             />
         </View>

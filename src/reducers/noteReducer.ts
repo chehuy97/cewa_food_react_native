@@ -14,11 +14,11 @@ export const noteActionTypes = {
     NOTE_EDIT_SUCCESS: 'NOTE_EDIT_SUCCESS',
     NOTE_REMOVE_REQUEST: 'NOTE_REMOVE_REQUEST',
     NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS',
-    ADD_REMINDER: 'NOTE_ADD_REMINDER',
-    REMOVE_APPEARED_REMINDER: 'NOTE_REMOVE_APPEARED_REMINDER',
-    REMOVE_REMINDER: 'REMOVE_REMINDER',
-    UPDATE_REMINDER: 'UPDATE_REMINDER',
-    NOTE_REMOVE_ALL: 'NOTE_REMOVE_ALL'
+    // ADD_REMINDER: 'NOTE_ADD_REMINDER',
+    // REMOVE_APPEARED_REMINDER: 'NOTE_REMOVE_APPEARED_REMINDER',
+    // REMOVE_REMINDER: 'REMOVE_REMINDER',
+    // UPDATE_REMINDER: 'UPDATE_REMINDER',
+    // NOTE_REMOVE_ALL: 'NOTE_REMOVE_ALL'
 }
 
 export interface INote {
@@ -29,11 +29,11 @@ export interface INote {
     account_id: string
 }
 
-export interface IReminder {
-    reminder_id:number
-    note:INote,
-    time:Date
-}
+// export interface IReminder {
+//     reminder_id:number
+//     note:INote,
+//     time:Date
+// }
 
 export type noteList = {
     notes: INote[]
@@ -43,18 +43,16 @@ export type noteDetail = {
     note: INote
 }
 
-export type reminderDetail = {
-    reminder:IReminder
-}
+// export type reminderDetail = {
+//     reminder:IReminder
+// }
 
-export type reminderList = {
-    reminders:IReminder[]
-}
+// export type reminderList = {
+//     reminders:IReminder[]
+// }
 
 export type notePayload = {
     notes: INote[],
-    noteUpdate: INote,
-    noteReminders: IReminder[],
     errorMessage: string
 }
 
@@ -71,18 +69,10 @@ export interface ActionError {
 }
 export type noteAction = ActionSuccess<notePayload> | ActionSuccess<noteList> | 
                         ActionSuccess<noteDetail> | ActionSuccess<string> | 
-                        ActionSuccess<reminderDetail> | ActionSuccess<reminderList> | ActionError
+                         ActionError
 
 export const defaultState: notePayload = {
     notes: [],
-    noteUpdate: {
-        id: '',
-        title: '',
-        content: '',
-        color: colors.yellow_theme,
-        account_id: ''
-    },
-    noteReminders: [],
     errorMessage: ''
 }
 
@@ -90,8 +80,9 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
     switch (action.type) {
         case noteActionTypes.NOTE_FETCH_SUCCESS:
             action = <ActionSuccess<noteList>>action
-            state = { ...state, notes: action.payload.notes }
+            state.notes = action.payload.notes
             return state
+            // return { ...state, notes: action.payload.notes }
         case noteActionTypes.NOTE_EDIT_SUCCESS:
             return state
         case noteActionTypes.NOTE_ADD_SUCCESS:
@@ -103,34 +94,39 @@ const reducer = (state = defaultState, action: noteAction): notePayload => {
             state = { ...state, errorMessage: action.payload.message }
             ToastAndroid.show(state.errorMessage, ToastAndroid.SHORT);
             return state
-        case noteActionTypes.ADD_REMINDER:
-            action = <ActionSuccess<reminderDetail>>action
-            state.noteReminders.push(action.payload.reminder)
-            return state 
-        case noteActionTypes.REMOVE_APPEARED_REMINDER:
-            action = <ActionSuccess<reminderList>>action
-            state.noteReminders = action.payload.reminders
-            return state    
-        case noteActionTypes.UPDATE_REMINDER:
-            action = <ActionSuccess<reminderDetail>>action
-            let reminder = action.payload.reminder
-            state.noteReminders.forEach( item => {
-                if(item.reminder_id == reminder.reminder_id) {
-                    item.time = reminder.time
-                }
-            })
-            return state
-        case noteActionTypes.REMOVE_REMINDER: 
-            action = <SuccessAction<reminderDetail>>action
-            let dReminder = action.payload.reminder
-            let index = state.noteReminders.findIndex(obj => obj.reminder_id == dReminder.reminder_id)
-            state.noteReminders.splice(index,1)
-            return state
-        case noteActionTypes.NOTE_REMOVE_ALL:
-            state.noteReminders.forEach( item => {
-                deleteNotification(item.reminder_id)
-            })
-            return defaultState
+        // case noteActionTypes.ADD_REMINDER:
+        //     action = <ActionSuccess<reminderDetail>>action
+        //     // if(typeof(action.payload.reminder.time) == 'string'){
+        //     //     let d = new Date(action.payload.reminder.time)
+        //     //     action.payload.reminder.time = d
+        //     // }
+        //     state.noteReminders.push(action.payload.reminder)
+        //     return state 
+        // case noteActionTypes.REMOVE_APPEARED_REMINDER:
+        //     action = <ActionSuccess<reminderList>>action
+        //     state.noteReminders = action.payload.reminders
+        //     return state    
+        // case noteActionTypes.UPDATE_REMINDER:
+        //     action = <ActionSuccess<reminderDetail>>action
+        //     let reminder = action.payload.reminder
+        //     state.noteReminders.forEach( item => {
+        //         if(item.reminder_id == reminder.reminder_id) {
+        //             item.note = reminder.note
+        //             item.time = reminder.time
+        //         }
+        //     })
+        //     return state
+        // case noteActionTypes.REMOVE_REMINDER: 
+        //     action = <SuccessAction<reminderDetail>>action
+        //     let dReminder = action.payload.reminder
+        //     let index = state.noteReminders.findIndex(obj => obj.reminder_id == dReminder.reminder_id)
+        //     state.noteReminders.splice(index,1)
+        //     return state
+        // case noteActionTypes.NOTE_REMOVE_ALL:
+        //     state.noteReminders.forEach( item => {
+        //         deleteNotification(item.reminder_id)
+        //     })
+        //     return defaultState
         default:
             return defaultState
     }
