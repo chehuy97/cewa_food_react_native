@@ -24,6 +24,7 @@ const Saved = () => {
             {render_store_save()}
         </View>
     )
+    
 }
 
 export default Saved

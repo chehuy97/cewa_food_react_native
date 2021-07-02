@@ -13,25 +13,6 @@ import { fetch_store } from '../../actions/storeAction'
 
 const Home = () => {
 
-    // const defaultStores: IStore[] = []
-    // const [stores, setStores]: [IStore[], (stores: IStore[]) => void] = useState(defaultStores)
-
-    // useEffect(() => {
-    //     console.log('run second');
-        
-    //     get_store_data()
-    // },[searchValue])
-
-    // const get_store_data = () => {
-    //      get_store(searchValue).then(response => {            
-    //         let data: IStore[] = response.data.data
-    //         setStores(data)
-    //     }).catch(err => {
-    //         console.log("Error is "+err);
-            
-    //     })
-    // }
-
     const stores = useSelector(state => state.store.stores)
     const dispatch = useDispatch()
     const [searchValue,setSearchValue] = useState(" ")
