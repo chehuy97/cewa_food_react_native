@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Alert,
-  FlatList,
-} from 'react-native';
+import { Text, View, StyleSheet, Alert, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import AppHeader from '../../components/appHeader';
@@ -14,11 +8,7 @@ import {navigate} from '../../routes/rootNavigation';
 import {INote, IReminder, useSelector} from '../../reducers';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {
-  remove_appeared_reminder,
-  fetch_all_notes,
-  add_reminder
-} from '../../actions';
+import { remove_appeared_reminder, add_reminder } from '../../actions';
 import {scheduledLocalNotification} from '../../service/notification';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
@@ -36,7 +26,7 @@ const index = () => {
     console.log('REMINDER SCREEN');
     //get_all_notes();
     dispatch(remove_appeared_reminder(reminders));
-  }, [isFocus, reload]);
+  }, [reload]);
 
   // const get_all_notes = async () => {
   //   await dispatch(fetch_all_notes(auth.id, auth.accessToken));
