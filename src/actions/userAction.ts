@@ -63,7 +63,7 @@ export const register_request = (user: IUser):ThunkAction<Promise<void>, {}, {},
             goBack()
             ToastAndroid.show("Register successfully", ToastAndroid.SHORT);
         }).catch(err => {
-            dispatch(err.response.data.errorMessage)
+            dispatch(register_failure(err.response.data.errorMessage))
         })
     }
 }
@@ -79,7 +79,7 @@ export const register_failure = (msg: string): ErrorAction => {
     return {
         type: userActionTypes.REGISTER_FAILURE,
         payload: {
-            message: "Register fail"
+            message: msg
         }
     }
 }
