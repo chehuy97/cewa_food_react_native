@@ -50,7 +50,7 @@ const Login = () => {
                 email: email,
                 password: password
             }
-            await dispatch(login_request(user, navigate_to_home))
+            await dispatch(login_request(user, navigate_to_home, disable_loading))
             setLoading(false)
         } else {
             Alert.alert("Invalid email")
@@ -59,6 +59,10 @@ const Login = () => {
 
     const navigate_to_home = () => {
         navigate("Drawer")
+    }
+
+    const disable_loading = () => {
+        setLoading(false)
     }
 
     return (

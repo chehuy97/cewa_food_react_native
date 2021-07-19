@@ -9,7 +9,7 @@ export interface userLoginWithEmail {
     password: string
 }
 
-export const login_request = (user: userLoginWithEmail, callback: () => void):
+export const login_request = (user: userLoginWithEmail, loginSuccesss: () => void, loginFailure: () => void):
     ThunkAction<Promise<void>, {}, {}, userAction> => {
     return (dispatch: ThunkDispatch<{}, {}, userAction>) => {
         return login(user).then(response => {
@@ -22,11 +22,12 @@ export const login_request = (user: userLoginWithEmail, callback: () => void):
                 refreshToken: result.data.refresh_token
             }
             dispatch(login_success(userAuth))
-            callback()
+            loginSuccesss()
         }).catch(err => {
             console.log("Error login fail");
-
-            dispatch(login_failure(err))
+            loginFailure()
+            let errorMsg = 'Login fail'
+            dispatch(login_failure(errorMsg))
         })
     }
 }
@@ -38,13 +39,11 @@ export const login_success = (payload: userAuth): SuccessAction<userAuth> => {
     }
 }
 
-export const login_failure = (err: any): ErrorAction => {
-    console.log(err);
-
+export const login_failure = (msg: string): ErrorAction => {
     return {
         type: userActionTypes.LOGIN_FAILURE,
         payload: {
-            message: err.response.data.errorMessage
+            message: msg
         }
     }
 }

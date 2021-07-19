@@ -11,6 +11,8 @@ export type ResponeType<T> = {
 }
 
 export const login = (user: userLoginWithEmail): Promise<AxiosResponse<ResponeType<any>>> => {
+  console.log(login_api);
+  
   return axios({
     method: 'post',
     url: login_api,
@@ -18,9 +20,9 @@ export const login = (user: userLoginWithEmail): Promise<AxiosResponse<ResponeTy
       email: user.email,
       password: user.password
     },
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    // headers: {
+    //   'Content-Type': 'application/json'
+    // }
   })
 }
 
@@ -100,5 +102,20 @@ export const remove_note = (note_id:string, token:string): Promise<AxiosResponse
     data:{
       note_id: note_id
     }
+  })
+}
+
+export const add_new_user_in_note = (email: string, note_id:string, token:string): Promise<AxiosResponse<ResponeType<any>>> => {
+  return axios({
+    method:'POST',
+    url:note_api+"/user",
+    headers: {
+      'Content-Type': 'application/json',
+      'access-token':token
+    },
+    data:{
+      note_id: note_id,
+      email: email
+    },
   })
 }

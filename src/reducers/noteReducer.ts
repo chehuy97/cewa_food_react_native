@@ -1,8 +1,4 @@
 import { ToastAndroid } from "react-native"
-import { deleteNotification } from '../service/notification'
-import colors from "../utils/constants/colors"
-import { SuccessAction } from "./userReducer"
-import{ scheduledLocalNotification }  from '../service/notification'
 
 export const noteActionTypes = {
     NOTE_FAILURE: 'NOTE_FAILURE',
@@ -14,6 +10,7 @@ export const noteActionTypes = {
     NOTE_EDIT_SUCCESS: 'NOTE_EDIT_SUCCESS',
     NOTE_REMOVE_REQUEST: 'NOTE_REMOVE_REQUEST',
     NOTE_REMOVE_SUCCESS: 'NOTE_REMOVE_SUCCESS',
+    NOTE_ADD_NEW_USER: 'NOTE_ADD_NEW_USER',
 }
 
 export interface INote {
